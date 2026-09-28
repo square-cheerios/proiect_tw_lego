@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BrickStore - LEGO Inventory</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="app-header">
+        <h1>BrickStore</h1>
+        <p>Manage your LEGO store inventory</p>
+        <p class="app-count">3 sets, 2 available</p>
+    </header>
+
+
+    <main class="container">
+
+        <!-- ADD LEGO SET -->
+        <section class="panel add-panel">
+
+            <h2>Add LEGO Set</h2>
+
+            <form class="item-form">
+
+                <label>
+                    Set name
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="e.g. Millennium Falcon"
+                    >
+                </label>
+
+                <label>
+                    Condition
+                    <select name="condition">
+                        <option value="new">New</option>
+                        <option value="used">Used</option>
+                        <option value="sealed">Sealed</option>
+                    </select>
+                </label>
+
+                <button type="submit">
+                    Add LEGO Set
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- LEGO INVENTORY -->
+        <section class="panel inventory-panel">
+
+            <h2>LEGO Inventory</h2>
+
+            <!--
+            When the inventory is empty:
+            <p class="empty">No LEGO sets in the inventory.</p>
+            -->
+
+            <ul class="item-list">
+
+                <!-- SET 1 -->
+                <li class="item-card">
+
+                    <div class="item-info">
+                        <h3>Millennium Falcon</h3>
+                        <p class="set-number">Set 75192</p>
+
+                        <span class="badge badge-sealed">
+                            Sealed
+                        </span>
+                    </div>
+
+                    <span class="status status-available">
+                        Available
+                    </span>
+
+                </li>
+
+
+                <!-- SET 2 -->
+                <li class="item-card done">
+
+                    <div class="item-info">
+                        <h3>Porsche 911 RSR</h3>
+                        <p class="set-number">Set 42096</p>
+
+                        <span class="badge badge-used">
+                            Used
+                        </span>
+                    </div>
+
+                    <span class="status status-unavailable">
+                        Unavailable
+                    </span>
+
+                </li>
+
+
+                <!-- SET 3 -->
+                <li class="item-card">
+
+                    <div class="item-info">
+                        <h3>Great Pyramid of Giza</h3>
+                        <p class="set-number">Set 21058</p>
+
+                        <span class="badge badge-new">
+                            New
+                        </span>
+                    </div>
+
+                    <span class="status status-available">
+                        Available
+                    </span>
+
+                </li>
+
+            </ul>
+
+        </section>
+
+    </main>
+
+
+    <footer class="app-footer">
+        Web Technologies Project · BrickStore
+    </footer>
+
+</body>
+</html>
