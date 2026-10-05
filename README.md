@@ -53,14 +53,14 @@ No build step or server is required for Stage 1.
 
 | ID | Requirement | Where | How to check |
 |---|---|---|---|
-| S1-R1 | README: description, fields, sample data, how to run | [README.md](README.md) | Read README |
-| S1-R2 | AI usage section | [README.md#ai-usage](README.md#ai-usage) | Read AI usage section |
-| S1-R3 | AI log for Stage 1 | [ai-log/etapa-01.md](ai-log/etapa-01.md) | Read AI log |
-| S1-R4 | Header, form and 3 LEGO set cards | [index.html](index.html) | Open page |
-| S1-R5 | Unavailable set has a different style | [style.css](style.css) | Check Porsche card |
-| S1-R6 | Two columns on desktop, one under 700px | [style.css](style.css) | Resize browser below 700px |
-| S1-R7 | Visible keyboard focus and readable dark theme | [style.css](style.css) | Use Tab and enable dark mode |
-| S1-R8 | Stage 1 commit pushed | [d6017e6](https://github.com/square-cheerios/proiect_tw_lego/commit/d6017e6) | Check commit history |
+| S1-R1 | README: description, fields, sample data, how to run | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/README.md) | Read README |
+| S1-R2 | AI usage section | [README.md#ai-usage](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/README.md#ai-usage) | Read AI usage section |
+| S1-R3 | AI log for Stage 1 | [ai-log/etapa-01.md](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/ai-log/etapa-01.md) | Read AI log |
+| S1-R4 | Header, form and 3 LEGO set cards | [index.html](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/index.html) | Open page |
+| S1-R5 | Unavailable set has a different style | [style.css](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/style.css) | Check Porsche card |
+| S1-R6 | Two columns on desktop, one under 700px | [style.css](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/style.css) | Resize browser below 700px |
+| S1-R7 | Visible keyboard focus and readable dark theme | [style.css](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/style.css) | Use Tab and enable dark mode |
+| S1-R8 | Stage 1 commit pushed | [d6017e6](https://github.com/square-cheerios/proiect_tw_lego/commit/d6017e6d47146ceb3ce7dcbacf5d9a1e7dabff3d) | Check commit history |
 
 ## Stage 2: Data Logic
 
@@ -87,4 +87,14 @@ Results and manual tests are displayed in the browser console (F12).
 - [x] Stage 2: data logic in JavaScript
 - [ ] Stage 3: Vite and React project
 
-|
+## Stage 2 checklist
+
+| ID | Requirement | Where | How to check |
+|---|---|---|---|
+| S2-R1 | JS file linked, logs on page load | [index.html - script](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/index.html#L211-L212) | Open the page and check the browser console (F12) |
+| S2-R2 | 3+ items with id, name, state and tag | [legoSets.js - initial data](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/legoSets.js#L1-L32) | Check the initial `legoSets` array |
+| S2-R3 | List, count, search, add, toggle and delete implemented | [legoSets.js - functions](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/legoSets.js#L41-L155) | Check the functions and console output |
+| S2-R4 | Add rejects empty name and invalid condition | [legoSets.js - validation](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/legoSets.js#L95-L107) | Check the validation tests in the console |
+| S2-R5 | Original array remains unchanged after add | [legoSets.js - immutability test](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/legoSets.js#L182-L201) | Check `Original still contains: 3 LEGO sets` in the console |
+| S2-R6 | README Stage 2 section and AI log | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/README.md#stage-2-data-logic), [ai-log/etapa-02.md](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/ai-log/etapa-02.md) | Read the documentation files |
+| S2-R7 | Stage 2 commit pushed | [Stage 2 commit](https://github.com/square-cheerios/proiect_tw_lego/commit/8cd16c6097a202f0575dfbfa03b3081d7f29b69b) | Check the GitHub commit history |

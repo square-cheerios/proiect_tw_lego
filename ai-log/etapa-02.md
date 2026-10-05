@@ -6,7 +6,7 @@
 
 ## Conversations
 
-- <SHARE LINK TO THIS CONVERSATION> — Stage 2 JavaScript data logic,
+- <https://chatgpt.com/share/6ac38b35-d008-83eb-8c07-82058abf32f1> — Stage 2 JavaScript data logic,
   validation, console tests and documentation
 
 ## Key requests
