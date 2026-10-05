@@ -37,9 +37,9 @@ No build step or server is required for Stage 1.
 
 | Tool | Used for |
 |---|---|
-| ChatGPT | Planning the Stage 1 structure, adapting the existing LEGO database project to the course requirements, and assisting with the HTML/CSS mockup and documentation |
+| ChatGPT | Assistance with project structure, HTML/CSS mockup, JavaScript data logic, validation, testing and documentation for Stages 1 and 2 |
 
-Details for each stage are available in the `ai-log/` folder.
+[Details for each stage are available in the `ai-log/` folder](ai-log/).
 
 ## Status
 
@@ -53,11 +53,38 @@ Details for each stage are available in the `ai-log/` folder.
 
 | ID | Requirement | Where | How to check |
 |---|---|---|---|
-| S1-R1 | README: description, fields, sample data, how to run | README.md | Read README |
-| S1-R2 | AI usage section | README.md | Read AI usage section |
-| S1-R3 | AI log for Stage 1 | ai-log/etapa-01.md | Read AI log |
-| S1-R4 | Header, form and 3 LEGO set cards | `index.html` | Open page |
-| S1-R5 | Unavailable set has a different style | `style.css` | Check Porsche card |
-| S1-R6 | Two columns on desktop, one under 700px | `style.css` | Resize browser below 700px |
-| S1-R7 | Visible keyboard focus and readable dark theme | `style.css` | Use Tab and enable dark mode |
-| S1-R8 | Stage 1 commit pushed | GitHub commit | Check commit history |
+| S1-R1 | README: description, fields, sample data, how to run | [README.md](README.md) | Read README |
+| S1-R2 | AI usage section | [README.md#ai-usage](README.md#ai-usage) | Read AI usage section |
+| S1-R3 | AI log for Stage 1 | [ai-log/etapa-01.md](ai-log/etapa-01.md) | Read AI log |
+| S1-R4 | Header, form and 3 LEGO set cards | [index.html](index.html) | Open page |
+| S1-R5 | Unavailable set has a different style | [style.css](style.css) | Check Porsche card |
+| S1-R6 | Two columns on desktop, one under 700px | [style.css](style.css) | Resize browser below 700px |
+| S1-R7 | Visible keyboard focus and readable dark theme | [style.css](style.css) | Use Tab and enable dark mode |
+| S1-R8 | Stage 1 commit pushed | [d6017e6](https://github.com/square-cheerios/proiect_tw_lego/commit/d6017e6) | Check commit history |
+
+## Stage 2: Data Logic
+
+Stage 2 introduces the data logic of the BrickStore application using plain
+JavaScript, without DOM manipulation.
+
+The `legoSets.js` file contains the LEGO set data and functions for:
+
+- listing LEGO sets;
+- counting available sets;
+- searching sets;
+- adding new sets with validation;
+- toggling availability;
+- deleting sets.
+
+All functions follow an immutable approach and return new arrays instead of
+modifying the original data.
+
+Results and manual tests are displayed in the browser console (F12).
+
+## Status
+
+- [x] Stage 1: static mockup
+- [x] Stage 2: data logic in JavaScript
+- [ ] Stage 3: Vite and React project
+
+|

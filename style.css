@@ -1,404 +1,1527 @@
-/* =========================
+/* =========================================================
    GENERAL
-   ========================= */
+   ========================================================= */
 
 * {
     box-sizing: border-box;
 }
 
 :root {
-    --bg: #f5f5f5;
-    --card: #ffffff;
-    --text: #202020;
-    --muted: #707070;
-    --border: #dedede;
 
-    --accent: #e2231a;
-    --accent-dark: #b91c1c;
-    --accent-soft: #fff1f0;
+    /* Background */
 
-    --header: #ffd500;
-    --header-text: #111111;
+    --bg: #f5f4fb;
 
-    --green: #198754;
-    --green-soft: #e7f6ed;
+    /* Glass */
 
-    --badge-new: #198754;
-    --badge-used: #e67e22;
-    --badge-sealed: #2563eb;
+    --card: rgba(255, 255, 255, 0.70);
+
+    --text: #292735;
+    --muted: #777386;
+
+    --border: rgba(118, 105, 150, 0.14);
+
+
+    /* Pastel palette */
+
+    --purple: #a995df;
+    --purple-dark: #7764bd;
+    --purple-soft: #ebe6fa;
+
+    --pink: #e7a2c1;
+    --pink-soft: #fbe8f0;
+
+    --mint: #9bd9c2;
+    --mint-dark: #4fa689;
+    --mint-soft: #e1f6ee;
+
+    --blue: #9bc8e7;
+    --blue-soft: #e4f2fb;
+
+    --peach: #f4cba5;
+
+
+    /* Shadows */
+
+    --shadow: rgba(70, 55, 105, 0.10);
+
+    --glow-purple: rgba(168, 143, 235, 0.30);
+    --glow-pink: rgba(238, 160, 198, 0.25);
+    --glow-mint: rgba(130, 220, 188, 0.24);
 }
 
 
-/* =========================
-   PAGE
-   ========================= */
+/* =========================================================
+   BODY
+   ========================================================= */
 
 body {
+
     margin: 0;
 
+    min-height: 100vh;
+
     font-family:
+        Inter,
         system-ui,
         -apple-system,
         "Segoe UI",
         Roboto,
         sans-serif;
 
-    background: var(--bg);
     color: var(--text);
 
     line-height: 1.5;
+
+
+    /* Soft glowing background */
+
+    background:
+
+        radial-gradient(
+            circle at 10% 20%,
+            var(--glow-purple),
+            transparent 27%
+        ),
+
+        radial-gradient(
+            circle at 90% 30%,
+            var(--glow-pink),
+            transparent 29%
+        ),
+
+        radial-gradient(
+            circle at 55% 90%,
+            var(--glow-mint),
+            transparent 31%
+        ),
+
+        var(--bg);
 }
 
 
-/* =========================
+/* =========================================================
    HEADER
-   ========================= */
+   ========================================================= */
 
 .app-header {
-    background: var(--header);
-    color: var(--header-text);
+
+    position: relative;
+
+    isolation: isolate;
+
+    overflow: hidden;
+
+
+    width: calc(100% - 44px);
+    max-width: 1200px;
+
+    margin: 22px auto 0;
+
+    padding: 48px 20px;
+
 
     text-align: center;
 
-    padding: 32px 20px;
+
+    border:
+
+        1px solid
+        rgba(255, 255, 255, 0.72);
+
+    border-radius: 30px;
+
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(184, 166, 232, 0.94),
+            rgba(231, 166, 197, 0.91),
+            rgba(157, 216, 195, 0.93)
+        );
+
+
+    box-shadow:
+
+        0 20px 60px var(--shadow),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.80);
 }
+
+
+/* =========================================================
+   MOVING HEADER GLOW
+   ========================================================= */
+
+.app-header::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    top: -250px;
+    left: -150px;
+
+    border-radius: 50%;
+
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.35),
+            transparent 65%
+        );
+
+
+    filter: blur(20px);
+
+
+    animation:
+
+        headerGlow
+        10s
+        ease-in-out
+        infinite
+        alternate;
+
+
+    z-index: 0;
+}
+
+
+.app-header::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 400px;
+    height: 400px;
+
+    right: -160px;
+    bottom: -240px;
+
+    border-radius: 50%;
+
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.22),
+            transparent 65%
+        );
+
+
+    filter: blur(15px);
+
+    z-index: 0;
+}
+
+
+@keyframes headerGlow {
+
+    0% {
+
+        transform:
+            translate(-10%, -5%);
+    }
+
+    50% {
+
+        transform:
+            translate(80%, 20%);
+    }
+
+    100% {
+
+        transform:
+            translate(160%, 5%);
+    }
+}
+
+
+/* =========================================================
+   HEADER CONTENT
+   ========================================================= */
+
+.header-content {
+
+    position: relative;
+
+    z-index: 3;
+}
+
 
 .app-header h1 {
+
     margin: 0;
 
-    font-size: 2.5rem;
-    font-weight: 800;
+    color: white;
+
+    font-size:
+
+        clamp(
+            2.7rem,
+            5vw,
+            4.2rem
+        );
+
+    font-weight: 850;
+
+    letter-spacing: -0.065em;
+
+
+    text-shadow:
+
+        0 2px 8px
+        rgba(255, 255, 255, 0.15),
+
+        0 10px 35px
+        rgba(80, 55, 120, 0.20);
+
+
+    transition:
+
+        transform 0.3s ease,
+
+        text-shadow 0.3s ease;
 }
 
-.app-header p {
-    margin: 6px 0 0;
+
+.app-header:hover h1 {
+
+    transform:
+        scale(1.025);
+
+
+    text-shadow:
+
+        0 0 18px
+        rgba(255, 255, 255, 0.35),
+
+        0 12px 40px
+        rgba(80, 55, 120, 0.25);
 }
+
+
+.header-description {
+
+    margin:
+
+        12px
+        0
+        0;
+
+    color:
+
+        rgba(
+            255,
+            255,
+            255,
+            0.88
+        );
+
+    font-size: 1.05rem;
+}
+
 
 .app-count {
-    font-size: 0.9rem;
-    font-weight: 600;
+
+    display: inline-block;
+
+
+    margin-top: 18px;
+
+    padding:
+
+        7px
+        15px;
+
+
+    border:
+
+        1px solid
+        rgba(255, 255, 255, 0.60);
+
+    border-radius: 999px;
+
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            0.16
+        );
+
+
+    backdrop-filter:
+        blur(12px);
+
+
+    color: white;
+
+    font-size: 0.82rem;
+
+    font-weight: 750;
+
+
+    box-shadow:
+
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.25);
 }
 
 
-/* =========================
+/* =========================================================
+   FLOATING LEGO BRICKS
+   ========================================================= */
+
+.floating-bricks {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    border-radius: inherit;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+.brick {
+
+    position: absolute;
+
+
+    width: 55px;
+    height: 27px;
+
+
+    border-radius: 7px;
+
+
+    opacity: 0.60;
+
+
+    box-shadow:
+
+        inset 0 3px 4px
+        rgba(255, 255, 255, 0.42),
+
+        0 9px 22px
+        rgba(70, 55, 100, 0.16);
+
+
+    animation:
+
+        floatBrick
+        7s
+        ease-in-out
+        infinite;
+}
+
+
+/* LEGO studs */
+
+.brick::before,
+.brick::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: -7px;
+
+
+    width: 14px;
+    height: 9px;
+
+
+    border-radius:
+
+        5px
+        5px
+        2px
+        2px;
+
+
+    background: inherit;
+
+
+    box-shadow:
+
+        inset 0 2px 2px
+        rgba(255, 255, 255, 0.35);
+}
+
+
+.brick::before {
+    left: 9px;
+}
+
+
+.brick::after {
+    right: 9px;
+}
+
+
+/* Brick positions */
+
+.brick-1 {
+
+    top: 23%;
+    left: 7%;
+
+    background: #c5b4ff;
+
+    rotate: -15deg;
+
+    animation-delay: 0s;
+}
+
+
+.brick-2 {
+
+    bottom: 18%;
+    left: 16%;
+
+    background: #ffafcc;
+
+    rotate: 12deg;
+
+    animation-delay: -2s;
+}
+
+
+.brick-3 {
+
+    top: 19%;
+    right: 11%;
+
+    background: #a8e6cf;
+
+    rotate: 18deg;
+
+    animation-delay: -4s;
+}
+
+
+.brick-4 {
+
+    bottom: 17%;
+    right: 24%;
+
+    background: #bde0fe;
+
+    rotate: -10deg;
+
+    animation-delay: -1s;
+}
+
+
+.brick-5 {
+
+    top: 48%;
+    right: 5%;
+
+    background: #ffd6a5;
+
+    rotate: 25deg;
+
+    animation-delay: -3s;
+}
+
+
+.brick-6 {
+
+    bottom: 12%;
+    left: 34%;
+
+    background: #ffc8dd;
+
+    rotate: -20deg;
+
+    animation-delay: -5s;
+}
+
+
+/* Floating animation */
+
+@keyframes floatBrick {
+
+    0%,
+    100% {
+
+        translate:
+            0
+            0;
+    }
+
+
+    50% {
+
+        translate:
+            0
+            -15px;
+    }
+}
+
+
+/* =========================================================
    MAIN LAYOUT
-   ========================= */
+   ========================================================= */
 
 .container {
-    max-width: 1050px;
 
-    margin: 32px auto;
-    padding: 0 20px;
+    max-width: 1100px;
+
+    margin:
+
+        34px
+        auto;
+
+    padding:
+
+        0
+        22px;
+
 
     display: grid;
 
-    grid-template-columns: 1fr 2fr;
 
-    gap: 24px;
+    grid-template-columns:
+
+        0.9fr
+        1.8fr;
+
+
+    gap: 26px;
 
     align-items: start;
 }
 
 
-/* =========================
-   PANELS
-   ========================= */
+/* =========================================================
+   GLASS PANELS
+   ========================================================= */
 
 .panel {
+
+    position: relative;
+
+
+    padding: 26px;
+
+
+    border:
+
+        1px solid
+        rgba(255, 255, 255, 0.72);
+
+    border-radius: 24px;
+
+
     background: var(--card);
 
-    border: 1px solid var(--border);
-    border-radius: 12px;
 
-    padding: 22px;
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+
+    box-shadow:
+
+        0 18px 45px
+        var(--shadow),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.75);
 }
+
 
 .panel h2 {
-    margin-top: 0;
-    margin-bottom: 20px;
+
+    margin:
+
+        0
+        0
+        22px;
+
 
     font-size: 1.25rem;
+
+    font-weight: 750;
+
+    letter-spacing: -0.025em;
 }
 
 
-/* =========================
+/* =========================================================
    FORM
-   ========================= */
+   ========================================================= */
 
 .item-form {
+
     display: flex;
+
     flex-direction: column;
 
-    gap: 18px;
+    gap: 19px;
 }
+
 
 .item-form label {
+
     display: flex;
+
     flex-direction: column;
 
-    gap: 7px;
+    gap: 8px;
 
-    font-weight: 600;
-    font-size: 0.9rem;
+
+    color: var(--muted);
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
 }
+
 
 .item-form input,
 .item-form select {
+
     width: 100%;
 
-    padding: 10px 12px;
 
-    border: 1px solid var(--border);
-    border-radius: 7px;
+    padding:
 
-    background: var(--card);
+        12px
+        14px;
+
+
+    border:
+
+        1px solid
+        var(--border);
+
+    border-radius: 13px;
+
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            0.62
+        );
+
+
     color: var(--text);
 
+
     font: inherit;
+
+
+    transition:
+
+        border-color 0.2s ease,
+
+        box-shadow 0.2s ease,
+
+        transform 0.2s ease;
 }
+
+
+.item-form input:hover,
+.item-form select:hover {
+
+    border-color:
+        var(--purple);
+}
+
+
+.item-form input:focus,
+.item-form select:focus {
+
+    border-color:
+        var(--purple);
+
+
+    box-shadow:
+
+        0 0 0 4px
+        rgba(156, 140, 219, 0.12),
+
+        0 5px 20px
+        rgba(156, 140, 219, 0.12);
+}
+
+
+/* =========================================================
+   LIQUID BUTTON
+   ========================================================= */
 
 .item-form button {
-    border: none;
-    border-radius: 7px;
 
-    padding: 11px 16px;
+    position: relative;
 
-    background: var(--accent);
-    color: white;
-
-    font: inherit;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s,
-        transform 0.2s;
-}
-
-.item-form button:hover {
-    background: var(--accent-dark);
-
-    transform: translateY(-1px);
-}
+    overflow: hidden;
 
 
-/* =========================
-   LEGO SET LIST
-   ========================= */
-
-.item-list {
-    list-style: none;
-
-    padding: 0;
-    margin: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 12px;
-}
+    margin-top: 4px;
 
 
-/* =========================
-   LEGO SET CARD
-   ========================= */
+    padding:
 
-.item-card {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 20px;
-
-    padding: 16px;
-
-    border: 1px solid var(--border);
-    border-radius: 10px;
-
-    transition:
-        border-color 0.2s,
-        background 0.2s,
-        transform 0.2s;
-}
-
-.item-card:hover {
-    border-color: var(--accent);
-
-    background: var(--accent-soft);
-
-    transform: translateY(-1px);
-}
-
-.item-info h3 {
-    margin: 0;
-
-    font-size: 1rem;
-}
-
-.set-number {
-    margin: 2px 0 9px;
-
-    color: var(--muted);
-
-    font-size: 0.85rem;
-}
+        13px
+        18px;
 
 
-/* =========================
-   BADGES
-   ========================= */
+    border:
 
-.badge {
-    display: inline-block;
-
-    padding: 4px 9px;
+        1px solid
+        rgba(255, 255, 255, 0.62);
 
     border-radius: 999px;
 
+
+    background:
+
+        linear-gradient(
+            120deg,
+            var(--purple),
+            var(--pink),
+            var(--mint)
+        );
+
+
+    background-size:
+        200%
+        200%;
+
+
     color: white;
 
-    font-size: 0.7rem;
-    font-weight: 700;
 
-    text-transform: uppercase;
+    font: inherit;
+
+    font-weight: 750;
+
+
+    cursor: pointer;
+
+
+    box-shadow:
+
+        0 9px 25px
+        rgba(156, 140, 219, 0.25),
+
+        inset 0 1px 1px
+        rgba(255, 255, 255, 0.50);
+
+
+    transition:
+
+        transform 0.25s ease,
+
+        box-shadow 0.25s ease,
+
+        background-position 0.4s ease;
 }
+
+
+/* Gloss / liquid reflection */
+
+.item-form button::before {
+
+    content: "";
+
+    position: absolute;
+
+
+    top: 3px;
+
+    left: 10%;
+    right: 10%;
+
+
+    height: 45%;
+
+
+    border-radius:
+        999px;
+
+
+    background:
+
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.45),
+            rgba(255, 255, 255, 0)
+        );
+
+
+    pointer-events: none;
+}
+
+
+.item-form button span {
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.item-form button:hover {
+
+    transform:
+
+        translateY(-3px)
+        scale(1.01);
+
+
+    background-position:
+
+        100%
+        50%;
+
+
+    box-shadow:
+
+        0 12px 30px
+        rgba(156, 140, 219, 0.32),
+
+        0 0 25px
+        var(--glow-pink);
+}
+
+
+.item-form button:active {
+
+    transform:
+
+        translateY(0)
+        scale(0.98);
+}
+
+
+/* =========================================================
+   INVENTORY LIST
+   ========================================================= */
+
+.item-list {
+
+    list-style: none;
+
+    padding: 0;
+
+    margin: 0;
+
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   LEGO CARDS
+   ========================================================= */
+
+.item-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+
+    gap: 20px;
+
+
+    padding:
+
+        18px
+        19px;
+
+
+    border:
+
+        1px solid
+        var(--border);
+
+    border-radius:
+        18px;
+
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            0.60
+        );
+
+
+    box-shadow:
+
+        0 7px 22px
+        rgba(74, 60, 110, 0.055);
+
+
+    transition:
+
+        transform 0.25s ease,
+
+        border-color 0.25s ease,
+
+        box-shadow 0.25s ease,
+
+        background 0.25s ease;
+}
+
+
+.item-card:hover {
+
+    transform:
+        translateY(-4px);
+
+
+    border-color:
+
+        rgba(
+            156,
+            140,
+            219,
+            0.42
+        );
+
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            0.82
+        );
+
+
+    box-shadow:
+
+        0 15px 35px
+        rgba(74, 60, 110, 0.10),
+
+        0 0 25px
+        rgba(156, 140, 219, 0.09);
+}
+
+
+/* Gradient strip on the left */
+
+.item-card::before {
+
+    content: "";
+
+    position: absolute;
+
+
+    top: 15%;
+    bottom: 15%;
+
+    left: 0;
+
+
+    width: 4px;
+
+
+    border-radius:
+
+        0
+        999px
+        999px
+        0;
+
+
+    background:
+
+        linear-gradient(
+            var(--purple),
+            var(--pink)
+        );
+}
+
+
+.item-info {
+
+    padding-left: 5px;
+}
+
+
+.item-info h3 {
+
+    margin: 0;
+
+
+    font-size: 1rem;
+
+    font-weight: 750;
+
+    letter-spacing: -0.015em;
+}
+
+
+.set-number {
+
+    margin:
+
+        3px
+        0
+        10px;
+
+
+    color:
+        var(--muted);
+
+
+    font-size:
+        0.80rem;
+}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.badge {
+
+    display: inline-block;
+
+
+    padding:
+
+        5px
+        10px;
+
+
+    border-radius:
+        999px;
+
+
+    font-size:
+        0.67rem;
+
+    font-weight:
+        800;
+
+
+    letter-spacing:
+        0.04em;
+
+
+    text-transform:
+        uppercase;
+}
+
 
 .badge-new {
-    background: var(--badge-new);
+
+    background:
+        var(--mint-soft);
+
+    color:
+        var(--mint-dark);
 }
+
 
 .badge-used {
-    background: var(--badge-used);
+
+    background:
+        var(--pink-soft);
+
+    color:
+        #b15f85;
 }
+
 
 .badge-sealed {
-    background: var(--badge-sealed);
+
+    background:
+        var(--blue-soft);
+
+    color:
+        #598bad;
 }
 
 
-/* =========================
+/* =========================================================
    STATUS
-   ========================= */
+   ========================================================= */
 
 .status {
-    font-size: 0.85rem;
-    font-weight: 600;
 
-    white-space: nowrap;
+    padding:
+
+        6px
+        11px;
+
+
+    border-radius:
+        999px;
+
+
+    font-size:
+        0.76rem;
+
+    font-weight:
+        700;
+
+
+    white-space:
+        nowrap;
 }
+
 
 .status-available {
-    color: var(--green);
+
+    background:
+        var(--mint-soft);
+
+    color:
+        var(--mint-dark);
 }
+
 
 .status-unavailable {
-    color: var(--muted);
+
+    background:
+        var(--purple-soft);
+
+    color:
+        var(--purple-dark);
 }
 
 
-/* =========================
-   UNAVAILABLE / DONE CARD
-   ========================= */
-
-.item-card.done h3 {
-    text-decoration: line-through;
-
-    color: var(--muted);
-}
+/* =========================================================
+   DONE / UNAVAILABLE
+   ========================================================= */
 
 .item-card.done {
-    opacity: 0.75;
+
+    opacity:
+        0.68;
 }
 
 
-/* =========================
-   EMPTY LIST
-   ========================= */
+.item-card.done h3 {
+
+    color:
+        var(--muted);
+
+    text-decoration:
+        line-through;
+}
+
+
+/* =========================================================
+   EMPTY INVENTORY
+   ========================================================= */
 
 .empty {
-    color: var(--muted);
 
-    text-align: center;
+    padding: 25px;
 
-    padding: 20px;
+    color:
+        var(--muted);
+
+    text-align:
+        center;
 }
 
 
-/* =========================
-   KEYBOARD FOCUS
-   ========================= */
+/* =========================================================
+   KEYBOARD ACCESSIBILITY
+   ========================================================= */
 
 :focus-visible {
-    outline: 3px solid var(--accent);
 
-    outline-offset: 3px;
+    outline:
+
+        3px solid
+        var(--purple);
+
+    outline-offset:
+        3px;
 }
 
 
-/* =========================
+/* =========================================================
    FOOTER
-   ========================= */
+   ========================================================= */
 
 .app-footer {
-    text-align: center;
 
-    color: var(--muted);
+    padding:
 
-    font-size: 0.85rem;
+        12px
+        20px
+        30px;
 
-    padding: 20px;
+
+    color:
+        var(--muted);
+
+
+    text-align:
+        center;
+
+
+    font-size:
+        0.78rem;
 }
 
 
-/* =========================
-   MOBILE
-   ========================= */
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
 
 @media (max-width: 700px) {
 
-    .container {
-        grid-template-columns: 1fr;
-
-        margin-top: 20px;
-    }
-
     .app-header {
-        padding: 24px 16px;
+
+        width:
+            calc(100% - 24px);
+
+        margin-top:
+            12px;
+
+        padding:
+
+            35px
+            18px;
+
+
+        border-radius:
+            22px;
     }
 
-    .app-header h1 {
-        font-size: 2rem;
+
+    .container {
+
+        grid-template-columns:
+            1fr;
+
+
+        margin-top:
+            20px;
+
+
+        padding:
+
+            0
+            12px;
     }
+
+
+    .panel {
+
+        border-radius:
+            20px;
+    }
+
 
     .item-card {
-        align-items: flex-start;
+
+        align-items:
+            flex-start;
+    }
+
+
+    .brick {
+
+        transform:
+            scale(0.8);
     }
 }
 
 
-/* =========================
+/* =========================================================
    DARK MODE
-   ========================= */
+   ========================================================= */
 
 @media (prefers-color-scheme: dark) {
 
     :root {
-        --bg: #111111;
-        --card: #1c1c1c;
-        --text: #f3f3f3;
-        --muted: #aaaaaa;
-        --border: #383838;
 
-        --accent: #ff4a42;
-        --accent-dark: #ff625b;
-        --accent-soft: #2b1918;
+        --bg:
+            #16151d;
 
-        --header: #d6b400;
-        --header-text: #111111;
 
-        --green: #5bd394;
-        --green-soft: #173526;
+        --card:
+
+            rgba(
+                35,
+                33,
+                45,
+                0.78
+            );
+
+
+        --text:
+            #f4f1f7;
+
+
+        --muted:
+            #aaa4b5;
+
+
+        --border:
+
+            rgba(
+                216,
+                204,
+                236,
+                0.12
+            );
+
+
+        --purple:
+            #ad9be8;
+
+        --purple-dark:
+            #c4b7ee;
+
+        --purple-soft:
+            #302b43;
+
+
+        --pink:
+            #d995b5;
+
+        --pink-soft:
+            #3d2935;
+
+
+        --mint:
+            #86cbb4;
+
+        --mint-dark:
+            #9de0c8;
+
+        --mint-soft:
+            #203a32;
+
+
+        --blue-soft:
+            #253643;
+
+
+        --shadow:
+
+            rgba(
+                0,
+                0,
+                0,
+                0.25
+            );
+
+
+        --glow-purple:
+
+            rgba(
+                151,
+                122,
+                217,
+                0.15
+            );
+
+
+        --glow-pink:
+
+            rgba(
+                217,
+                130,
+                172,
+                0.12
+            );
+
+
+        --glow-mint:
+
+            rgba(
+                103,
+                196,
+                163,
+                0.12
+            );
+    }
+
+
+    .item-form input,
+    .item-form select,
+    .item-card {
+
+        background:
+
+            rgba(
+                42,
+                39,
+                53,
+                0.72
+            );
+    }
+
+
+    .item-card:hover {
+
+        background:
+
+            rgba(
+                51,
+                47,
+                64,
+                0.92
+            );
+    }
+
+
+    .app-header {
+
+        background:
+
+            linear-gradient(
+                135deg,
+                #7564a4,
+                #986b82,
+                #628f80
+            );
     }
 }

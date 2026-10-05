@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,16 +12,47 @@
 
 <body>
 
+    <!-- =========================
+         HEADER
+         ========================= -->
+
     <header class="app-header">
-        <h1>BrickStore</h1>
-        <p>Manage your LEGO store inventory</p>
-        <p class="app-count">3 sets, 2 available</p>
+
+        <!-- Decorative floating LEGO bricks -->
+        <div class="floating-bricks" aria-hidden="true">
+            <span class="brick brick-1"></span>
+            <span class="brick brick-2"></span>
+            <span class="brick brick-3"></span>
+            <span class="brick brick-4"></span>
+            <span class="brick brick-5"></span>
+            <span class="brick brick-6"></span>
+        </div>
+
+        <div class="header-content">
+            <h1>BrickStore</h1>
+
+            <p class="header-description">
+                Manage your LEGO store inventory
+            </p>
+
+            <p class="app-count">
+                3 sets, 2 available
+            </p>
+        </div>
+
     </header>
 
 
+    <!-- =========================
+         MAIN CONTENT
+         ========================= -->
+
     <main class="container">
 
-        <!-- ADD LEGO SET -->
+        <!-- =====================
+             ADD LEGO SET
+             ===================== -->
+
         <section class="panel add-panel">
 
             <h2>Add LEGO Set</h2>
@@ -29,6 +61,7 @@
 
                 <label>
                     Set name
+
                     <input
                         type="text"
                         name="name"
@@ -36,8 +69,10 @@
                     >
                 </label>
 
+
                 <label>
                     Condition
+
                     <select name="condition">
                         <option value="new">New</option>
                         <option value="used">Used</option>
@@ -45,8 +80,9 @@
                     </select>
                 </label>
 
+
                 <button type="submit">
-                    Add LEGO Set
+                    <span>Add LEGO Set</span>
                 </button>
 
             </form>
@@ -54,29 +90,45 @@
         </section>
 
 
-        <!-- LEGO INVENTORY -->
+        <!-- =====================
+             LEGO INVENTORY
+             ===================== -->
+
         <section class="panel inventory-panel">
 
             <h2>LEGO Inventory</h2>
 
             <!--
             When the inventory is empty:
-            <p class="empty">No LEGO sets in the inventory.</p>
+
+            <p class="empty">
+                No LEGO sets in the inventory.
+            </p>
             -->
 
             <ul class="item-list">
 
+
                 <!-- SET 1 -->
+
                 <li class="item-card">
 
                     <div class="item-info">
-                        <h3>Millennium Falcon</h3>
-                        <p class="set-number">Set 75192</p>
+
+                        <h3>
+                            Millennium Falcon
+                        </h3>
+
+                        <p class="set-number">
+                            Set 75192
+                        </p>
 
                         <span class="badge badge-sealed">
                             Sealed
                         </span>
+
                     </div>
+
 
                     <span class="status status-available">
                         Available
@@ -86,16 +138,25 @@
 
 
                 <!-- SET 2 -->
+
                 <li class="item-card done">
 
                     <div class="item-info">
-                        <h3>Porsche 911 RSR</h3>
-                        <p class="set-number">Set 42096</p>
+
+                        <h3>
+                            Porsche 911 RSR
+                        </h3>
+
+                        <p class="set-number">
+                            Set 42096
+                        </p>
 
                         <span class="badge badge-used">
                             Used
                         </span>
+
                     </div>
+
 
                     <span class="status status-unavailable">
                         Unavailable
@@ -105,16 +166,25 @@
 
 
                 <!-- SET 3 -->
+
                 <li class="item-card">
 
                     <div class="item-info">
-                        <h3>Great Pyramid of Giza</h3>
-                        <p class="set-number">Set 21058</p>
+
+                        <h3>
+                            Great Pyramid of Giza
+                        </h3>
+
+                        <p class="set-number">
+                            Set 21058
+                        </p>
 
                         <span class="badge badge-new">
                             New
                         </span>
+
                     </div>
+
 
                     <span class="status status-available">
                         Available
@@ -129,9 +199,18 @@
     </main>
 
 
+    <!-- =========================
+         FOOTER
+         ========================= -->
+
     <footer class="app-footer">
         Web Technologies Project · BrickStore
     </footer>
 
+
+    <!-- Stage 2 JavaScript -->
+    <script src="legoSets.js"></script>
+
 </body>
+
 </html>
