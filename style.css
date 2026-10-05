@@ -1,4 +1,10 @@
 /* =========================================================
+   BRICKSTORE
+   Stage 1 / Stage 2 interface
+   ========================================================= */
+
+
+/* =========================================================
    GENERAL
    ========================================================= */
 
@@ -7,23 +13,20 @@
 }
 
 :root {
-
     /* Background */
-
     --bg: #f5f4fb;
 
-    /* Glass */
-
+    /* Glass panels */
     --card: rgba(255, 255, 255, 0.70);
 
+    /* Text */
     --text: #292735;
     --muted: #777386;
 
+    /* Borders */
     --border: rgba(118, 105, 150, 0.14);
 
-
     /* Pastel palette */
-
     --purple: #a995df;
     --purple-dark: #7764bd;
     --purple-soft: #ebe6fa;
@@ -40,11 +43,10 @@
 
     --peach: #f4cba5;
 
-
     /* Shadows */
-
     --shadow: rgba(70, 55, 105, 0.10);
 
+    /* Background glows */
     --glow-purple: rgba(168, 143, 235, 0.30);
     --glow-pink: rgba(238, 160, 198, 0.25);
     --glow-mint: rgba(130, 220, 188, 0.24);
@@ -56,7 +58,6 @@
    ========================================================= */
 
 body {
-
     margin: 0;
 
     min-height: 100vh;
@@ -73,30 +74,48 @@ body {
 
     line-height: 1.5;
 
-
-    /* Soft glowing background */
-
     background:
-
         radial-gradient(
             circle at 10% 20%,
             var(--glow-purple),
             transparent 27%
         ),
-
         radial-gradient(
             circle at 90% 30%,
             var(--glow-pink),
             transparent 29%
         ),
-
         radial-gradient(
             circle at 55% 90%,
             var(--glow-mint),
             transparent 31%
         ),
-
         var(--bg);
+
+    transition:
+        background 0.4s ease,
+        color 0.4s ease;
+}
+
+
+/* =========================================================
+   THEME CHECKBOX
+   ========================================================= */
+
+/*
+   The real checkbox is hidden visually.
+   The label inside the header acts as the switch.
+*/
+
+.theme-checkbox {
+    position: fixed;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
 }
 
 
@@ -105,13 +124,11 @@ body {
    ========================================================= */
 
 .app-header {
-
     position: relative;
 
     isolation: isolate;
 
     overflow: hidden;
-
 
     width: calc(100% - 44px);
     max-width: 1200px;
@@ -120,20 +137,13 @@ body {
 
     padding: 48px 20px;
 
-
     text-align: center;
 
-
-    border:
-
-        1px solid
-        rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.72);
 
     border-radius: 30px;
 
-
     background:
-
         linear-gradient(
             135deg,
             rgba(184, 166, 232, 0.94),
@@ -141,13 +151,13 @@ body {
             rgba(157, 216, 195, 0.93)
         );
 
-
     box-shadow:
-
         0 20px 60px var(--shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.80);
 
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.80);
+    transition:
+        background 0.4s ease,
+        box-shadow 0.4s ease;
 }
 
 
@@ -156,7 +166,6 @@ body {
    ========================================================= */
 
 .app-header::before {
-
     content: "";
 
     position: absolute;
@@ -169,34 +178,27 @@ body {
 
     border-radius: 50%;
 
-
     background:
-
         radial-gradient(
             circle,
             rgba(255, 255, 255, 0.35),
             transparent 65%
         );
 
-
     filter: blur(20px);
 
-
     animation:
-
         headerGlow
         10s
         ease-in-out
         infinite
         alternate;
 
-
     z-index: 0;
 }
 
 
 .app-header::after {
-
     content: "";
 
     position: absolute;
@@ -209,15 +211,12 @@ body {
 
     border-radius: 50%;
 
-
     background:
-
         radial-gradient(
             circle,
             rgba(255, 255, 255, 0.22),
             transparent 65%
         );
-
 
     filter: blur(15px);
 
@@ -228,21 +227,15 @@ body {
 @keyframes headerGlow {
 
     0% {
-
-        transform:
-            translate(-10%, -5%);
+        transform: translate(-10%, -5%);
     }
 
     50% {
-
-        transform:
-            translate(80%, 20%);
+        transform: translate(80%, 20%);
     }
 
     100% {
-
-        transform:
-            translate(160%, 5%);
+        transform: translate(160%, 5%);
     }
 }
 
@@ -252,7 +245,6 @@ body {
    ========================================================= */
 
 .header-content {
-
     position: relative;
 
     z-index: 3;
@@ -260,13 +252,11 @@ body {
 
 
 .app-header h1 {
-
     margin: 0;
 
     color: white;
 
     font-size:
-
         clamp(
             2.7rem,
             5vw,
@@ -277,107 +267,235 @@ body {
 
     letter-spacing: -0.065em;
 
-
     text-shadow:
-
-        0 2px 8px
-        rgba(255, 255, 255, 0.15),
-
-        0 10px 35px
-        rgba(80, 55, 120, 0.20);
-
+        0 2px 8px rgba(255, 255, 255, 0.15),
+        0 10px 35px rgba(80, 55, 120, 0.20);
 
     transition:
-
         transform 0.3s ease,
-
         text-shadow 0.3s ease;
 }
 
 
 .app-header:hover h1 {
-
-    transform:
-        scale(1.025);
-
+    transform: scale(1.025);
 
     text-shadow:
-
-        0 0 18px
-        rgba(255, 255, 255, 0.35),
-
-        0 12px 40px
-        rgba(80, 55, 120, 0.25);
+        0 0 18px rgba(255, 255, 255, 0.35),
+        0 12px 40px rgba(80, 55, 120, 0.25);
 }
 
 
 .header-description {
+    margin: 12px 0 0;
 
-    margin:
-
-        12px
-        0
-        0;
-
-    color:
-
-        rgba(
-            255,
-            255,
-            255,
-            0.88
-        );
+    color: rgba(255, 255, 255, 0.88);
 
     font-size: 1.05rem;
 }
 
 
 .app-count {
-
     display: inline-block;
-
 
     margin-top: 18px;
 
-    padding:
+    padding: 7px 15px;
 
-        7px
-        15px;
-
-
-    border:
-
-        1px solid
-        rgba(255, 255, 255, 0.60);
+    border: 1px solid rgba(255, 255, 255, 0.60);
 
     border-radius: 999px;
 
+    background: rgba(255, 255, 255, 0.16);
 
-    background:
-
-        rgba(
-            255,
-            255,
-            255,
-            0.16
-        );
-
-
-    backdrop-filter:
-        blur(12px);
-
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 
     color: white;
 
     font-size: 0.82rem;
-
     font-weight: 750;
 
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+
+/* =========================================================
+   LIGHT / DARK THEME SWITCH
+   ========================================================= */
+
+.theme-switch {
+    position: absolute;
+
+    top: 22px;
+    right: 25px;
+
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 7px 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.38);
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.14);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    cursor: pointer;
 
     box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.20);
 
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.25);
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.theme-switch:hover {
+    transform: translateY(-2px);
+
+    background: rgba(255, 255, 255, 0.23);
+
+    box-shadow:
+        0 7px 20px rgba(70, 55, 100, 0.15);
+}
+
+
+/* Sun / Moon */
+
+.theme-icon {
+    color: white;
+
+    font-size: 0.95rem;
+
+    line-height: 1;
+
+    opacity: 0.65;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        text-shadow 0.3s ease;
+}
+
+
+.sun {
+    opacity: 1;
+
+    text-shadow:
+        0 0 9px rgba(255, 236, 170, 0.55);
+}
+
+
+.moon {
+    opacity: 0.55;
+}
+
+
+/* Switch track */
+
+.switch-track {
+    position: relative;
+
+    display: block;
+
+    width: 43px;
+    height: 23px;
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.30);
+
+    box-shadow:
+        inset 0 1px 4px rgba(60, 45, 90, 0.15);
+
+    transition:
+        background 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+/* Switch circle */
+
+.switch-thumb {
+    position: absolute;
+
+    top: 3px;
+    left: 3px;
+
+    width: 17px;
+    height: 17px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow:
+        0 2px 8px rgba(50, 40, 80, 0.25);
+
+    transition:
+        transform 0.35s cubic-bezier(.4, 0, .2, 1),
+        background 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+/* Switch checked */
+
+.theme-checkbox:checked
+~ .app-header
+.switch-thumb {
+    transform: translateX(20px);
+
+    background: #ddd3ff;
+
+    box-shadow:
+        0 0 12px rgba(198, 179, 255, 0.75);
+}
+
+
+.theme-checkbox:checked
+~ .app-header
+.switch-track {
+    background: rgba(58, 47, 84, 0.55);
+
+    box-shadow:
+        inset 0 1px 5px rgba(25, 20, 40, 0.35);
+}
+
+
+.theme-checkbox:checked
+~ .app-header
+.sun {
+    opacity: 0.40;
+
+    transform: scale(0.90);
+
+    text-shadow: none;
+}
+
+
+.theme-checkbox:checked
+~ .app-header
+.moon {
+    opacity: 1;
+
+    transform:
+        rotate(-10deg)
+        scale(1.08);
+
+    text-shadow:
+        0 0 10px rgba(220, 210, 255, 0.65);
 }
 
 
@@ -386,7 +504,6 @@ body {
    ========================================================= */
 
 .floating-bricks {
-
     position: absolute;
 
     inset: 0;
@@ -402,31 +519,20 @@ body {
 
 
 .brick {
-
     position: absolute;
-
 
     width: 55px;
     height: 27px;
 
-
     border-radius: 7px;
-
 
     opacity: 0.60;
 
-
     box-shadow:
-
-        inset 0 3px 4px
-        rgba(255, 255, 255, 0.42),
-
-        0 9px 22px
-        rgba(70, 55, 100, 0.16);
-
+        inset 0 3px 4px rgba(255, 255, 255, 0.42),
+        0 9px 22px rgba(70, 55, 100, 0.16);
 
     animation:
-
         floatBrick
         7s
         ease-in-out
@@ -438,33 +544,25 @@ body {
 
 .brick::before,
 .brick::after {
-
     content: "";
 
     position: absolute;
 
     top: -7px;
 
-
     width: 14px;
     height: 9px;
 
-
     border-radius:
-
         5px
         5px
         2px
         2px;
 
-
     background: inherit;
 
-
     box-shadow:
-
-        inset 0 2px 2px
-        rgba(255, 255, 255, 0.35);
+        inset 0 2px 2px rgba(255, 255, 255, 0.35);
 }
 
 
@@ -478,10 +576,9 @@ body {
 }
 
 
-/* Brick positions */
+/* Individual LEGO bricks */
 
 .brick-1 {
-
     top: 23%;
     left: 7%;
 
@@ -494,7 +591,6 @@ body {
 
 
 .brick-2 {
-
     bottom: 18%;
     left: 16%;
 
@@ -507,7 +603,6 @@ body {
 
 
 .brick-3 {
-
     top: 19%;
     right: 11%;
 
@@ -520,7 +615,6 @@ body {
 
 
 .brick-4 {
-
     bottom: 17%;
     right: 24%;
 
@@ -533,7 +627,6 @@ body {
 
 
 .brick-5 {
-
     top: 48%;
     right: 5%;
 
@@ -546,7 +639,6 @@ body {
 
 
 .brick-6 {
-
     bottom: 12%;
     left: 34%;
 
@@ -558,24 +650,17 @@ body {
 }
 
 
-/* Floating animation */
+/* Floating movement */
 
 @keyframes floatBrick {
 
     0%,
     100% {
-
-        translate:
-            0
-            0;
+        translate: 0 0;
     }
 
-
     50% {
-
-        translate:
-            0
-            -15px;
+        translate: 0 -15px;
     }
 }
 
@@ -585,28 +670,17 @@ body {
    ========================================================= */
 
 .container {
-
     max-width: 1100px;
 
-    margin:
+    margin: 34px auto;
 
-        34px
-        auto;
-
-    padding:
-
-        0
-        22px;
-
+    padding: 0 22px;
 
     display: grid;
 
-
     grid-template-columns:
-
         0.9fr
         1.8fr;
-
 
     gap: 26px;
 
@@ -619,49 +693,32 @@ body {
    ========================================================= */
 
 .panel {
-
     position: relative;
-
 
     padding: 26px;
 
-
-    border:
-
-        1px solid
-        rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.72);
 
     border-radius: 24px;
 
-
     background: var(--card);
 
-
-    backdrop-filter:
-        blur(18px);
-
-    -webkit-backdrop-filter:
-        blur(18px);
-
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
     box-shadow:
+        0 18px 45px var(--shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75);
 
-        0 18px 45px
-        var(--shadow),
-
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.75);
+    transition:
+        background 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
 }
 
 
 .panel h2 {
-
-    margin:
-
-        0
-        0
-        22px;
-
+    margin: 0 0 22px;
 
     font-size: 1.25rem;
 
@@ -676,7 +733,6 @@ body {
    ========================================================= */
 
 .item-form {
-
     display: flex;
 
     flex-direction: column;
@@ -686,13 +742,11 @@ body {
 
 
 .item-form label {
-
     display: flex;
 
     flex-direction: column;
 
     gap: 8px;
-
 
     color: var(--muted);
 
@@ -704,72 +758,49 @@ body {
 
 .item-form input,
 .item-form select {
-
     width: 100%;
 
+    padding: 12px 14px;
 
-    padding:
-
-        12px
-        14px;
-
-
-    border:
-
-        1px solid
-        var(--border);
+    border: 1px solid var(--border);
 
     border-radius: 13px;
 
-
-    background:
-
-        rgba(
-            255,
-            255,
-            255,
-            0.62
-        );
-
+    background: rgba(255, 255, 255, 0.62);
 
     color: var(--text);
 
-
     font: inherit;
 
-
     transition:
-
+        background 0.4s ease,
+        color 0.4s ease,
         border-color 0.2s ease,
-
         box-shadow 0.2s ease,
-
         transform 0.2s ease;
+}
+
+
+.item-form input::placeholder {
+    color: var(--muted);
+
+    opacity: 0.75;
 }
 
 
 .item-form input:hover,
 .item-form select:hover {
-
-    border-color:
-        var(--purple);
+    border-color: var(--purple);
 }
 
 
 .item-form input:focus,
 .item-form select:focus {
-
-    border-color:
-        var(--purple);
-
+    border-color: var(--purple);
 
     box-shadow:
-
-        0 0 0 4px
-        rgba(156, 140, 219, 0.12),
-
-        0 5px 20px
-        rgba(156, 140, 219, 0.12);
+        0 0 0 4px rgba(156, 140, 219, 0.12),
+        0 5px 20px rgba(156, 140, 219, 0.12);
 }
 
 
@@ -778,31 +809,19 @@ body {
    ========================================================= */
 
 .item-form button {
-
     position: relative;
 
     overflow: hidden;
 
-
     margin-top: 4px;
 
+    padding: 13px 18px;
 
-    padding:
-
-        13px
-        18px;
-
-
-    border:
-
-        1px solid
-        rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.62);
 
     border-radius: 999px;
 
-
     background:
-
         linear-gradient(
             120deg,
             var(--purple),
@@ -810,79 +829,55 @@ body {
             var(--mint)
         );
 
-
-    background-size:
-        200%
-        200%;
-
+    background-size: 200% 200%;
 
     color: white;
-
 
     font: inherit;
 
     font-weight: 750;
 
-
     cursor: pointer;
 
-
     box-shadow:
-
-        0 9px 25px
-        rgba(156, 140, 219, 0.25),
-
-        inset 0 1px 1px
-        rgba(255, 255, 255, 0.50);
-
+        0 9px 25px rgba(156, 140, 219, 0.25),
+        inset 0 1px 1px rgba(255, 255, 255, 0.50);
 
     transition:
-
         transform 0.25s ease,
-
         box-shadow 0.25s ease,
-
         background-position 0.4s ease;
 }
 
 
-/* Gloss / liquid reflection */
+/* Liquid reflection */
 
 .item-form button::before {
-
     content: "";
 
     position: absolute;
-
 
     top: 3px;
 
     left: 10%;
     right: 10%;
 
-
     height: 45%;
 
-
-    border-radius:
-        999px;
-
+    border-radius: 999px;
 
     background:
-
         linear-gradient(
             to bottom,
             rgba(255, 255, 255, 0.45),
             rgba(255, 255, 255, 0)
         );
 
-
     pointer-events: none;
 }
 
 
 .item-form button span {
-
     position: relative;
 
     z-index: 2;
@@ -890,33 +885,20 @@ body {
 
 
 .item-form button:hover {
-
     transform:
-
         translateY(-3px)
         scale(1.01);
 
-
-    background-position:
-
-        100%
-        50%;
-
+    background-position: 100% 50%;
 
     box-shadow:
-
-        0 12px 30px
-        rgba(156, 140, 219, 0.32),
-
-        0 0 25px
-        var(--glow-pink);
+        0 12px 30px rgba(156, 140, 219, 0.32),
+        0 0 25px var(--glow-pink);
 }
 
 
 .item-form button:active {
-
     transform:
-
         translateY(0)
         scale(0.98);
 }
@@ -927,13 +909,11 @@ body {
    ========================================================= */
 
 .item-list {
-
     list-style: none;
 
     padding: 0;
 
     margin: 0;
-
 
     display: flex;
 
@@ -948,131 +928,71 @@ body {
    ========================================================= */
 
 .item-card {
-
     position: relative;
 
     overflow: hidden;
 
-
     display: flex;
 
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
-    align-items:
-        center;
-
+    align-items: center;
 
     gap: 20px;
 
+    padding: 18px 19px;
 
-    padding:
+    border: 1px solid var(--border);
 
-        18px
-        19px;
+    border-radius: 18px;
 
-
-    border:
-
-        1px solid
-        var(--border);
-
-    border-radius:
-        18px;
-
-
-    background:
-
-        rgba(
-            255,
-            255,
-            255,
-            0.60
-        );
-
+    background: rgba(255, 255, 255, 0.60);
 
     box-shadow:
-
-        0 7px 22px
-        rgba(74, 60, 110, 0.055);
-
+        0 7px 22px rgba(74, 60, 110, 0.055);
 
     transition:
-
         transform 0.25s ease,
-
         border-color 0.25s ease,
-
         box-shadow 0.25s ease,
-
-        background 0.25s ease;
+        background 0.4s ease;
 }
 
 
 .item-card:hover {
+    transform: translateY(-4px);
 
-    transform:
-        translateY(-4px);
+    border-color: rgba(156, 140, 219, 0.42);
 
-
-    border-color:
-
-        rgba(
-            156,
-            140,
-            219,
-            0.42
-        );
-
-
-    background:
-
-        rgba(
-            255,
-            255,
-            255,
-            0.82
-        );
-
+    background: rgba(255, 255, 255, 0.82);
 
     box-shadow:
-
-        0 15px 35px
-        rgba(74, 60, 110, 0.10),
-
-        0 0 25px
-        rgba(156, 140, 219, 0.09);
+        0 15px 35px rgba(74, 60, 110, 0.10),
+        0 0 25px rgba(156, 140, 219, 0.09);
 }
 
 
-/* Gradient strip on the left */
+/* Pastel gradient strip */
 
 .item-card::before {
-
     content: "";
 
     position: absolute;
-
 
     top: 15%;
     bottom: 15%;
 
     left: 0;
 
-
     width: 4px;
 
-
     border-radius:
-
         0
         999px
         999px
         0;
 
-
     background:
-
         linear-gradient(
             var(--purple),
             var(--pink)
@@ -1081,15 +1001,12 @@ body {
 
 
 .item-info {
-
     padding-left: 5px;
 }
 
 
 .item-info h3 {
-
     margin: 0;
-
 
     font-size: 1rem;
 
@@ -1100,20 +1017,11 @@ body {
 
 
 .set-number {
+    margin: 3px 0 10px;
 
-    margin:
+    color: var(--muted);
 
-        3px
-        0
-        10px;
-
-
-    color:
-        var(--muted);
-
-
-    font-size:
-        0.80rem;
+    font-size: 0.80rem;
 }
 
 
@@ -1122,63 +1030,40 @@ body {
    ========================================================= */
 
 .badge {
-
     display: inline-block;
 
+    padding: 5px 10px;
 
-    padding:
+    border-radius: 999px;
 
-        5px
-        10px;
+    font-size: 0.67rem;
 
+    font-weight: 800;
 
-    border-radius:
-        999px;
+    letter-spacing: 0.04em;
 
-
-    font-size:
-        0.67rem;
-
-    font-weight:
-        800;
-
-
-    letter-spacing:
-        0.04em;
-
-
-    text-transform:
-        uppercase;
+    text-transform: uppercase;
 }
 
 
 .badge-new {
+    background: var(--mint-soft);
 
-    background:
-        var(--mint-soft);
-
-    color:
-        var(--mint-dark);
+    color: var(--mint-dark);
 }
 
 
 .badge-used {
+    background: var(--pink-soft);
 
-    background:
-        var(--pink-soft);
-
-    color:
-        #b15f85;
+    color: #b15f85;
 }
 
 
 .badge-sealed {
+    background: var(--blue-soft);
 
-    background:
-        var(--blue-soft);
-
-    color:
-        #598bad;
+    color: #598bad;
 }
 
 
@@ -1187,46 +1072,29 @@ body {
    ========================================================= */
 
 .status {
+    padding: 6px 11px;
 
-    padding:
+    border-radius: 999px;
 
-        6px
-        11px;
+    font-size: 0.76rem;
 
+    font-weight: 700;
 
-    border-radius:
-        999px;
-
-
-    font-size:
-        0.76rem;
-
-    font-weight:
-        700;
-
-
-    white-space:
-        nowrap;
+    white-space: nowrap;
 }
 
 
 .status-available {
+    background: var(--mint-soft);
 
-    background:
-        var(--mint-soft);
-
-    color:
-        var(--mint-dark);
+    color: var(--mint-dark);
 }
 
 
 .status-unavailable {
+    background: var(--purple-soft);
 
-    background:
-        var(--purple-soft);
-
-    color:
-        var(--purple-dark);
+    color: var(--purple-dark);
 }
 
 
@@ -1235,19 +1103,14 @@ body {
    ========================================================= */
 
 .item-card.done {
-
-    opacity:
-        0.68;
+    opacity: 0.68;
 }
 
 
 .item-card.done h3 {
+    color: var(--muted);
 
-    color:
-        var(--muted);
-
-    text-decoration:
-        line-through;
+    text-decoration: line-through;
 }
 
 
@@ -1256,14 +1119,11 @@ body {
    ========================================================= */
 
 .empty {
-
     padding: 25px;
 
-    color:
-        var(--muted);
+    color: var(--muted);
 
-    text-align:
-        center;
+    text-align: center;
 }
 
 
@@ -1272,14 +1132,20 @@ body {
    ========================================================= */
 
 :focus-visible {
+    outline: 3px solid var(--purple);
 
-    outline:
+    outline-offset: 3px;
+}
 
-        3px solid
-        var(--purple);
 
-    outline-offset:
-        3px;
+/* Give keyboard focus to our hidden checkbox switch */
+
+.theme-checkbox:focus-visible
+~ .app-header
+.theme-switch {
+    outline: 3px solid white;
+
+    outline-offset: 4px;
 }
 
 
@@ -1288,24 +1154,160 @@ body {
    ========================================================= */
 
 .app-footer {
-
     padding:
-
         12px
         20px
         30px;
 
+    color: var(--muted);
 
-    color:
-        var(--muted);
+    text-align: center;
+
+    font-size: 0.78rem;
+}
 
 
-    text-align:
-        center;
+/* =========================================================
+   MANUAL DARK MODE
+   ========================================================= */
+
+/*
+   When the checkbox is checked, these variables replace
+   the light-mode variables.
+
+   No JavaScript is required.
+*/
+
+body:has(#theme-toggle:checked) {
+    --bg: #16151d;
+
+    --card: rgba(35, 33, 45, 0.78);
+
+    --text: #f4f1f7;
+
+    --muted: #aaa4b5;
+
+    --border: rgba(216, 204, 236, 0.12);
+
+    --purple: #ad9be8;
+
+    --purple-dark: #c4b7ee;
+
+    --purple-soft: #302b43;
+
+    --pink: #d995b5;
+
+    --pink-soft: #3d2935;
+
+    --mint: #86cbb4;
+
+    --mint-dark: #9de0c8;
+
+    --mint-soft: #203a32;
+
+    --blue-soft: #253643;
+
+    --shadow: rgba(0, 0, 0, 0.25);
+
+    --glow-purple: rgba(151, 122, 217, 0.15);
+
+    --glow-pink: rgba(217, 130, 172, 0.12);
+
+    --glow-mint: rgba(103, 196, 163, 0.12);
+}
 
 
-    font-size:
-        0.78rem;
+/* Dark header */
+
+body:has(#theme-toggle:checked)
+.app-header {
+    background:
+        linear-gradient(
+            135deg,
+            #7564a4,
+            #986b82,
+            #628f80
+        );
+
+    box-shadow:
+        0 22px 65px rgba(0, 0, 0, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+
+/* Dark panels */
+
+body:has(#theme-toggle:checked)
+.panel {
+    border-color: rgba(216, 204, 236, 0.14);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.28),
+        0 0 35px rgba(151, 122, 217, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+
+/* Dark form controls */
+
+body:has(#theme-toggle:checked)
+.item-form input,
+
+body:has(#theme-toggle:checked)
+.item-form select {
+    background: rgba(42, 39, 53, 0.72);
+
+    color: var(--text);
+}
+
+
+/* Fix select options */
+
+body:has(#theme-toggle:checked)
+.item-form select option {
+    background: #2a2735;
+
+    color: #f4f1f7;
+}
+
+
+/* Dark cards */
+
+body:has(#theme-toggle:checked)
+.item-card {
+    background: rgba(42, 39, 53, 0.72);
+}
+
+
+body:has(#theme-toggle:checked)
+.item-card:hover {
+    background: rgba(51, 47, 64, 0.94);
+
+    border-color: rgba(173, 155, 232, 0.35);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.20),
+        0 0 28px rgba(173, 155, 232, 0.08);
+}
+
+
+/* Dark liquid button glow */
+
+body:has(#theme-toggle:checked)
+.item-form button {
+    box-shadow:
+        0 10px 28px rgba(173, 155, 232, 0.22),
+        0 0 18px rgba(217, 149, 181, 0.12),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35);
+}
+
+
+body:has(#theme-toggle:checked)
+.item-form button:hover {
+    box-shadow:
+        0 13px 32px rgba(173, 155, 232, 0.30),
+        0 0 28px rgba(217, 149, 181, 0.18),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35);
 }
 
 
@@ -1316,212 +1318,69 @@ body {
 @media (max-width: 700px) {
 
     .app-header {
+        width: calc(100% - 24px);
 
-        width:
-            calc(100% - 24px);
-
-        margin-top:
-            12px;
+        margin-top: 12px;
 
         padding:
+            68px
+            18px
+            35px;
 
-            35px
-            18px;
+        border-radius: 22px;
+    }
 
 
-        border-radius:
-            22px;
+    .theme-switch {
+        top: 15px;
+        right: 15px;
     }
 
 
     .container {
+        grid-template-columns: 1fr;
 
-        grid-template-columns:
-            1fr;
+        margin-top: 20px;
 
-
-        margin-top:
-            20px;
-
-
-        padding:
-
-            0
-            12px;
+        padding: 0 12px;
     }
 
 
     .panel {
-
-        border-radius:
-            20px;
+        border-radius: 20px;
     }
 
 
     .item-card {
-
-        align-items:
-            flex-start;
+        align-items: flex-start;
     }
 
 
     .brick {
-
-        transform:
-            scale(0.8);
+        scale: 0.80;
     }
 }
 
 
 /* =========================================================
-   DARK MODE
+   REDUCED MOTION
    ========================================================= */
 
-@media (prefers-color-scheme: dark) {
+/*
+   Accessibility:
+   users who disable animations in their OS will not see
+   the floating movement.
+*/
 
-    :root {
+@media (prefers-reduced-motion: reduce) {
 
-        --bg:
-            #16151d;
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
 
+        animation-iteration-count: 1 !important;
 
-        --card:
-
-            rgba(
-                35,
-                33,
-                45,
-                0.78
-            );
-
-
-        --text:
-            #f4f1f7;
-
-
-        --muted:
-            #aaa4b5;
-
-
-        --border:
-
-            rgba(
-                216,
-                204,
-                236,
-                0.12
-            );
-
-
-        --purple:
-            #ad9be8;
-
-        --purple-dark:
-            #c4b7ee;
-
-        --purple-soft:
-            #302b43;
-
-
-        --pink:
-            #d995b5;
-
-        --pink-soft:
-            #3d2935;
-
-
-        --mint:
-            #86cbb4;
-
-        --mint-dark:
-            #9de0c8;
-
-        --mint-soft:
-            #203a32;
-
-
-        --blue-soft:
-            #253643;
-
-
-        --shadow:
-
-            rgba(
-                0,
-                0,
-                0,
-                0.25
-            );
-
-
-        --glow-purple:
-
-            rgba(
-                151,
-                122,
-                217,
-                0.15
-            );
-
-
-        --glow-pink:
-
-            rgba(
-                217,
-                130,
-                172,
-                0.12
-            );
-
-
-        --glow-mint:
-
-            rgba(
-                103,
-                196,
-                163,
-                0.12
-            );
-    }
-
-
-    .item-form input,
-    .item-form select,
-    .item-card {
-
-        background:
-
-            rgba(
-                42,
-                39,
-                53,
-                0.72
-            );
-    }
-
-
-    .item-card:hover {
-
-        background:
-
-            rgba(
-                51,
-                47,
-                64,
-                0.92
-            );
-    }
-
-
-    .app-header {
-
-        background:
-
-            linear-gradient(
-                135deg,
-                #7564a4,
-                #986b82,
-                #628f80
-            );
+        transition-duration: 0.01ms !important;
     }
 }
