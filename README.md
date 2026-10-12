@@ -98,3 +98,47 @@ Results and manual tests are displayed in the browser console (F12).
 | S2-R5 | Original array remains unchanged after add | [legoSets.js - immutability test](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/legoSets.js#L182-L201) | Check `Original still contains: 3 LEGO sets` in the console |
 | S2-R6 | README Stage 2 section and AI log | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/README.md#stage-2-data-logic), [ai-log/etapa-02.md](https://github.com/square-cheerios/proiect_tw_lego/blob/8cd16c6097a202f0575dfbfa03b3081d7f29b69b/ai-log/etapa-02.md) | Read the documentation files |
 | S2-R7 | Stage 2 commit pushed | [Stage 2 commit](https://github.com/square-cheerios/proiect_tw_lego/commit/8cd16c6097a202f0575dfbfa03b3081d7f29b69b) | Check the GitHub commit history |
+
+## Stage 3: Vite and React Project
+
+BrickStore has been migrated from a static HTML/CSS/JavaScript application to a React application using Vite.
+
+The original files from Stages 1 and 2 are preserved in the `mockup/` directory.
+
+The LEGO inventory data is now defined in `frontend/src/App.jsx`. The application dynamically calculates the total number of LEGO sets and the number of available sets.
+
+At this stage, inventory data is displayed as formatted JSON. Individual LEGO set cards will be implemented as reusable React components in Stage 4.
+
+The original pastel design, floating LEGO bricks, glassmorphism effects and CSS-only Light/Dark switch have been preserved.
+
+## How to Run
+
+From the repository root:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open the local address displayed in the terminal (usually `http://localhost:5174/`).
+
+To verify the production build:
+
+```bash
+npm run build
+```
+
+## Project Status
+
+- [x] Stage 1: Static HTML/CSS mockup
+- [x] Stage 2: JavaScript data logic
+- [x] Stage 3: Vite and React initialization
+- [ ] Stage 4: Reusable React components
+
+## AI Usage — Stage 3
+
+ChatGPT was used to assist with setting up the Vite and React project, migrating the existing BrickStore interface to JSX, preserving the original CSS design, and preparing documentation.
+
+The generated code was reviewed and tested locally.
+
