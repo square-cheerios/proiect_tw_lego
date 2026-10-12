@@ -142,3 +142,14 @@ ChatGPT was used to assist with setting up the Vite and React project, migrating
 
 The generated code was reviewed and tested locally.
 
+## Stage 3 Checklist
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S3-R1 | `npm run dev` starts without errors | [frontend/package.json](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/frontend/package.json) | Run `npm install` and `npm run dev` |
+| S3-R2 | App name and counter computed from data | [frontend/src/App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/frontend/src/App.jsx) | Change availability and save |
+| S3-R3 | Original LEGO inventory data used | [frontend/src/App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/frontend/src/App.jsx) | Compare the data with README |
+| S3-R4 | Stage 1 styles reused | [frontend/src/App.css](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/frontend/src/App.css) | Inspect the application |
+| S3-R5 | `node_modules` ignored and build passes | [frontend/.gitignore](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/frontend/.gitignore) | Run `npm run build` |
+| S3-R6 | README Stage 3 section and AI log | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/README.md#stage-3-checklist), [ai-log/etapa-o3.md](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/ai-log/etapa-o3.md) | Read the documentation |
+| S3-R7 | Stage 3 commit pushed | [Stage 3 commit](https://github.com/square-cheerios/proiect_tw_lego/commit/94814e0e828e1c15749ccde04c9dcc628d4d9d2a) | Check GitHub commit history |
