@@ -3,6 +3,7 @@
 // =====================================================
 
 // Initial LEGO inventory data from Stage 2
+import LegoList from "./components/LegoList.jsx";
 
 const legoSets = [
     {
@@ -115,9 +116,7 @@ export default function App() {
                     <h2>LEGO Inventory</h2>
 
                     {/* Stage 3: raw data display */}
-                    <pre className="json-data">
-                        {JSON.stringify(legoSets, null, 2)}
-                    </pre>
+                    <LegoList legoSets={legoSets} />
 
                 </section>
 

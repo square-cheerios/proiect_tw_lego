@@ -153,3 +153,42 @@ The generated code was reviewed and tested locally.
 | S3-R5 | `node_modules` ignored and build passes | [frontend/.gitignore](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/frontend/.gitignore) | Run `npm run build` |
 | S3-R6 | README Stage 3 section and AI log | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/README.md#stage-3-checklist), [ai-log/etapa-o3.md](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/ai-log/etapa-o3.md) | Read the documentation |
 | S3-R7 | Stage 3 commit pushed | [Stage 3 commit](https://github.com/square-cheerios/proiect_tw_lego/commit/94814e0e828e1c15749ccde04c9dcc628d4d9d2a) | Check GitHub commit history |
+
+## Stage 3: Vite and React Project
+
+BrickStore has been migrated from a static HTML/CSS/JavaScript website to a React application using Vite.
+
+The original files from Stages 1 and 2 are preserved in the `mockup/` directory.
+
+The LEGO inventory data is now stored in `frontend/src/App.jsx`. The application automatically calculates the total number of LEGO sets and the number of available sets.
+
+The inventory is temporarily displayed as formatted JSON. Reusable React components for displaying LEGO set cards will be introduced in Stage 4.
+
+The original pastel design, floating LEGO bricks, glassmorphism effects and Light/Dark mode switch have been preserved.
+
+### How to Run
+
+From the repository root:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open the local address displayed by Vite, usually `http://localhost:5173/`.
+
+### Build Verification
+
+```bash
+npm run build
+```
+
+The production build was successfully tested using Vite v8.3.4.
+
+### Project Status
+
+- [x] Stage 1: Static HTML/CSS mockup
+- [x] Stage 2: JavaScript data logic
+- [x] Stage 3: Vite and React initialization
+- [ ] Stage 4: Reusable React components
