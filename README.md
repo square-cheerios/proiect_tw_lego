@@ -151,7 +151,7 @@ The generated code was reviewed and tested locally.
 | S3-R3 | Original LEGO inventory data used | [frontend/src/App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/frontend/src/App.jsx) | Compare the data with README |
 | S3-R4 | Stage 1 styles reused | [frontend/src/App.css](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/frontend/src/App.css) | Inspect the application |
 | S3-R5 | `node_modules` ignored and build passes | [frontend/.gitignore](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/frontend/.gitignore) | Run `npm run build` |
-| S3-R6 | README Stage 3 section and AI log | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/README.md#stage-3-checklist), [ai-log/etapa-o3.md](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/ai-log/etapa-o3.md) | Read the documentation |
+| S3-R6 | README Stage 3 section and AI log | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/README.md#stage-3-checklist), [ai-log/etapa-03.md](https://github.com/square-cheerios/proiect_tw_lego/blob/94814e0e828e1c15749ccde04c9dcc628d4d9d2a/ai-log/etapa-03.md) | Read the documentation |
 | S3-R7 | Stage 3 commit pushed | [Stage 3 commit](https://github.com/square-cheerios/proiect_tw_lego/commit/94814e0e828e1c15749ccde04c9dcc628d4d9d2a) | Check GitHub commit history |
 
 ## Stage 3: Vite and React Project
@@ -192,3 +192,50 @@ The production build was successfully tested using Vite v8.3.4.
 - [x] Stage 2: JavaScript data logic
 - [x] Stage 3: Vite and React initialization
 - [ ] Stage 4: Reusable React components
+
+
+
+## Stage 4: React Components
+
+In Stage 4, the LEGO inventory display was migrated from raw JSON to reusable React components.
+
+Two components were created:
+
+- **LegoCard.jsx** — displays an individual LEGO set, including its name, set number, condition and availability.
+- **LegoList.jsx** — receives the inventory array through props and renders a LegoCard component for each set using `map()` and a unique `key`.
+
+The components use conditional rendering to display an empty inventory message when no sets are available in the list.
+
+LEGO cards also change their appearance depending on the availability status. Unavailable sets are displayed with reduced opacity and a strikethrough title.
+
+The existing BrickStore design, including pastel colors, floating LEGO bricks and the Light/Dark mode switch, was preserved.
+
+### Testing
+
+- React components render the three initial LEGO sets.
+- The inventory counter displays 3 sets, 2 available.
+- The empty inventory case displays the appropriate message.
+- Changing the availability of a set updates its visual status.
+- No React errors or key warnings in the browser console.
+- `npm run build` completes successfully.
+
+### Project Status
+
+- [x] Stage 1: Static HTML/CSS mockup
+- [x] Stage 2: JavaScript data logic
+- [x] Stage 3: Vite and React initialization
+- [x] Stage 4: React components
+- [ ] Stage 5: Next development stage
+
+
+## Stage 4 Checklist
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S4-R1 | LegoCard component receives data through props | [LegoCard.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/caef0e57cd832dadea47a3d5ca1e5b83f70c86f1/frontend/src/components/LegoCard.jsx) | Check the component props and displayed fields |
+| S4-R2 | LegoList renders cards using map() and unique keys | [LegoList.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/caef0e57cd832dadea47a3d5ca1e5b83f70c86f1/frontend/src/components/LegoList.jsx) | Check `map()` and `key={set.id}` |
+| S4-R3 | App passes inventory data to LegoList | [App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/caef0e57cd832dadea47a3d5ca1e5b83f70c86f1/frontend/src/App.jsx) | Check the component import and props |
+| S4-R4 | Empty inventory is handled | [LegoList.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/caef0e57cd832dadea47a3d5ca1e5b83f70c86f1/frontend/src/components/LegoList.jsx) | Replace the inventory array with `[]` |
+| S4-R5 | Card appearance changes based on availability | [LegoCard.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/caef0e57cd832dadea47a3d5ca1e5b83f70c86f1/frontend/src/components/LegoCard.jsx) | Change `available` and inspect the card |
+| S4-R6 | README and Stage 4 AI log updated | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/caef0e57cd832dadea47a3d5ca1e5b83f70c86f1/README.md#stage-4-checklist), [etapa-04.md](https://github.com/square-cheerios/proiect_tw_lego/blob/caef0e57cd832dadea47a3d5ca1e5b83f70c86f1/ai-log/etapa-04.md) | Read the documentation |
+| S4-R7 | Stage 4 commit pushed to GitHub | [Stage 4 commit](https://github.com/square-cheerios/proiect_tw_lego/commit/caef0e57cd832dadea47a3d5ca1e5b83f70c86f1) | Check GitHub commit history |
