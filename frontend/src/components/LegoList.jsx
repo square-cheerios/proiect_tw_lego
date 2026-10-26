@@ -1,7 +1,6 @@
-
 import LegoCard from "./LegoCard.jsx";
 
-export default function LegoList({ legoSets }) {
+export default function LegoList({ legoSets, onToggle, onDelete }) {
     if (legoSets.length === 0) {
         return (
             <p className="empty">
@@ -13,7 +12,12 @@ export default function LegoList({ legoSets }) {
     return (
         <ul className="item-list">
             {legoSets.map((set) => (
-                <LegoCard key={set.id} set={set} />
+                <LegoCard
+                    key={set.id}
+                    set={set}
+                    onToggle={onToggle}
+                    onDelete={onDelete}
+                />
             ))}
         </ul>
     );

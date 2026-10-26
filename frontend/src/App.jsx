@@ -1,3 +1,4 @@
+import { useState } from "react";
 // =====================================================
 // BRICKSTORE - STAGE 3
 // =====================================================
@@ -5,7 +6,7 @@
 // Initial LEGO inventory data from Stage 2
 import LegoList from "./components/LegoList.jsx";
 
-const legoSets = [
+const INITIAL_LEGO_SETS = [
     {
         id: 1,
         name: "Millennium Falcon",
@@ -38,35 +39,60 @@ const legoSets = [
     }
 ];
 
-
 // =====================================================
 // MAIN REACT COMPONENT
 // =====================================================
+// Detect the system's preferred color scheme
+function getInitialTheme() {
+    const initialTheme = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+    ).matches ? "dark" : "light";
+
+    document.documentElement.dataset.theme = initialTheme;
+
+    return initialTheme;
+}
 
 export default function App() {
-
+        const [legoSets, setLegoSets] = useState(INITIAL_LEGO_SETS);
+        const [theme, setTheme] = useState(getInitialTheme);
     // Calculate the number of available LEGO sets
     const availableCount = legoSets.filter(
         (set) => set.available
     ).length;
+    function handleToggle(id) {
+    setLegoSets((prev) =>
+        prev.map((set) =>
+            set.id === id
+                ? { ...set, available: !set.available }
+                : set
+        )
+    );
+}
 
+function handleDelete(id) {
+    setLegoSets((prev) =>
+        prev.filter((set) => set.id !== id)
+    );
+}
     return (
         <>
-            {/* Light / Dark mode toggle */}
-            <input
-                type="checkbox"
-                id="theme-toggle"
-                className="theme-checkbox"
-                aria-label="Switch between light and dark mode"
-            />
+            
 
             {/* Header */}
             <header className="app-header">
 
-                {/* Theme switch */}
-                <label
-                    htmlFor="theme-toggle"
+                {/* Stage 5: React-controlled theme switch */}
+                <button
+                    type="button"
                     className="theme-switch"
+                    onClick={handleThemeToggle}
+                    aria-label={
+                        theme === "dark"
+                            ? "Switch to light mode"
+                            : "Switch to dark mode"
+                    }
+                    aria-pressed={theme === "dark"}
                     title="Switch theme"
                 >
                     <span className="theme-icon sun" aria-hidden="true">
@@ -80,7 +106,7 @@ export default function App() {
                     <span className="theme-icon moon" aria-hidden="true">
                         ☾
                     </span>
-                </label>
+                </button>
 
                 {/* Floating LEGO bricks */}
                 <div className="floating-bricks" aria-hidden="true">
@@ -116,7 +142,11 @@ export default function App() {
                     <h2>LEGO Inventory</h2>
 
                     {/* Stage 3: raw data display */}
-                    <LegoList legoSets={legoSets} />
+                    <LegoList
+                    legoSets={legoSets}
+                    onToggle={handleToggle}
+                    onDelete={handleDelete}
+                    />
 
                 </section>
 
@@ -128,4 +158,12 @@ export default function App() {
             </footer>
         </>
     );
+
+    function handleThemeToggle() {
+    const newTheme = theme === "dark" ? "light" : "dark";
+
+    setTheme(newTheme);
+    document.documentElement.dataset.theme = newTheme;
+}
+
 }
