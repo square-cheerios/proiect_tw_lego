@@ -239,3 +239,88 @@ The existing BrickStore design, including pastel colors, floating LEGO bricks an
 | S4-R5 | Card appearance changes based on availability | [LegoCard.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/caef0e57cd832dadea47a3d5ca1e5b83f70c86f1/frontend/src/components/LegoCard.jsx) | Change `available` and inspect the card |
 | S4-R6 | README and Stage 4 AI log updated | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/caef0e57cd832dadea47a3d5ca1e5b83f70c86f1/README.md#stage-4-checklist), [etapa-04.md](https://github.com/square-cheerios/proiect_tw_lego/blob/caef0e57cd832dadea47a3d5ca1e5b83f70c86f1/ai-log/etapa-04.md) | Read the documentation |
 | S4-R7 | Stage 4 commit pushed to GitHub | [Stage 4 commit](https://github.com/square-cheerios/proiect_tw_lego/commit/caef0e57cd832dadea47a3d5ca1e5b83f70c86f1) | Check GitHub commit history |
+
+
+## Stage 5: React State and Interactive Inventory
+
+In Stage 5, BrickStore was extended from a component-based LEGO inventory display into an interactive application using React state.
+
+The inventory is managed through the `useState()` hook in `App.jsx`. Users can change the availability of individual LEGO sets and remove sets from the inventory.
+
+Two main operations were implemented:
+
+- **Availability toggle** — uses `map()` to update the selected LEGO set without mutating the original array.
+- **Delete functionality** — uses `filter()` to remove a selected set from the inventory.
+
+The inventory counter updates automatically whenever the state changes.
+
+The initial inventory was also expanded from three to twelve LEGO sets. Product data was moved into `legoSets.js`, separating the inventory information from the React components.
+
+Each LEGO set now includes additional information such as its category, set number, number of pieces, condition, availability, and price when available.
+
+The original vertical inventory layout was replaced with a responsive card grid displaying three columns on desktop, two on tablets, and one on mobile devices.
+
+Product images are stored locally in the `public/images/` directory, with individual folders organized by LEGO set number. Sets without available images display a placeholder.
+
+A new component was introduced:
+
+- **`SearchBar.jsx`** — provides a controlled search input that filters LEGO sets by name, category, or set number.
+
+The application also displays the number of matching search results and an appropriate message when no sets match the search.
+
+The existing BrickStore design, including pastel colors, floating LEGO bricks, glassmorphism-inspired elements, and the Light/Dark Mode switch, was preserved.
+
+Inventory modifications are currently stored in React state and are reset when the page is refreshed.
+
+### Testing
+
+- Initial inventory renders twelve LEGO sets.
+- Inventory counter displays 12 sets, 9 available.
+- Availability checkbox updates the selected LEGO set.
+- Delete button removes the selected set from the inventory.
+- Inventory counters update automatically after state changes.
+- Light/Dark Mode switch works correctly.
+- Search by name, category, and set number returns matching sets.
+- Search results counter updates dynamically.
+- Searches without matching sets display an appropriate message.
+- Available LEGO product images are displayed correctly.
+- Sets without images display placeholders.
+- Responsive layout: [record final testing results].
+- `npm run lint`: [record result].
+- `npm run build`: [record result].
+
+### Project Status
+
+- [x] Stage 1: Static HTML/CSS mockup
+- [x] Stage 2: JavaScript data logic
+- [x] Stage 3: Vite and React initialization
+- [x] Stage 4: React components
+- [x] Stage 5: React state and interactive inventory
+
+## Stage 5 Checklist
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S5-R1 | Inventory is managed using React state | [App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/main/frontend/src/App.jsx) | Check `useState(INITIAL_LEGO_SETS)` |
+| S5-R2 | Availability is updated immutably | [App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/main/frontend/src/App.jsx) | Check `handleToggle()` and the use of `map()` |
+| S5-R3 | LEGO sets can be deleted immutably | [App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/main/frontend/src/App.jsx) | Check `handleDelete()` and the use of `filter()` |
+| S5-R4 | Child components receive callback functions through props | [LegoCard.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/main/frontend/src/components/LegoCard.jsx), [LegoList.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/main/frontend/src/components/LegoList.jsx) | Check `onToggle`, `onDelete` and the corresponding event handlers |
+| S5-R5 | Inventory counters update dynamically | [App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/main/frontend/src/App.jsx) | Toggle or delete a set and check the counter |
+| S5-R6 | Interactive inventory controls work correctly | [LegoCard.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/main/frontend/src/components/LegoCard.jsx) | Test the availability checkbox and Delete button |
+| S5-R7 | README and Stage 5 AI log updated | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/main/README.md), [etapa-05.md](https://github.com/square-cheerios/proiect_tw_lego/blob/main/ai-log/etapa-05.md) | Read the documentation |
+| S5-R8 | Stage 5 commit pushed to GitHub | [Commit history](https://github.com/square-cheerios/proiect_tw_lego/commits/main/) | Check the Stage 5 commit in GitHub history |
+
+### Additional Features
+
+The following features were implemented beyond the basic React state requirements:
+
+- Expanded inventory containing twelve LEGO sets.
+- Separate inventory data file (`legoSets.js`).
+- Responsive three-column LEGO catalog.
+- Product photographs and fallback placeholders.
+- Real-time search by name, category, and set number.
+- Dynamic search results counter.
+- Improved empty-search messaging.
+- React-controlled Light/Dark Mode.
+
+Individual LEGO set pages and React Router integration are planned for future development.

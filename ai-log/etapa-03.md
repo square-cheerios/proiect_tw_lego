@@ -54,9 +54,12 @@
 
 ## Testing
 
-- Node.js and npm version checks: successful.
+## Testing
+
+- Node.js v24.21.0: verified.
+- npm v11.19.0: verified.
 - React development server: started successfully.
 - BrickStore interface: rendered successfully.
-- LEGO inventory counter: displayed 3 sets, 2 available.
+- LEGO inventory: 3 sets, 2 available.
 - Inventory data: displayed as formatted JSON.
-- Production build: [complete after running `npm run build`].
+- Production build: successful using Vite v8.3.4 (725 ms).

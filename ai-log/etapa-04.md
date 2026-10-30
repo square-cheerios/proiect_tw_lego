@@ -57,4 +57,3 @@
 - Initial LEGO inventory rendered successfully.
 - React console checked for errors.
 - Production build completed successfully.
-- Empty inventory and availability tests: [record actual results].
