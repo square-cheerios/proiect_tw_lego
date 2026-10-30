@@ -5,40 +5,10 @@ import { useState } from "react";
 
 // Initial LEGO inventory data from Stage 2
 import LegoList from "./components/LegoList.jsx";
+import { INITIAL_LEGO_SETS } from "./data/legoSets.js";
 
-const INITIAL_LEGO_SETS = [
-    {
-        id: 1,
-        name: "Millennium Falcon",
-        available: true,
-        condition: "sealed",
-        category: "Star Wars",
-        setNumber: "75192",
-        price: 849.99,
-        pieces: 7541
-    },
-    {
-        id: 2,
-        name: "Porsche 911 RSR",
-        available: false,
-        condition: "used",
-        category: "Technic",
-        setNumber: "42096",
-        price: 149.99,
-        pieces: 1580
-    },
-    {
-        id: 3,
-        name: "Great Pyramid of Giza",
-        available: true,
-        condition: "new",
-        category: "Architecture",
-        setNumber: "21058",
-        price: 139.99,
-        pieces: 1476
-    }
-];
 
+import SearchBar from "./components/SearchBar.jsx";
 // =====================================================
 // MAIN REACT COMPONENT
 // =====================================================
@@ -56,10 +26,21 @@ function getInitialTheme() {
 export default function App() {
         const [legoSets, setLegoSets] = useState(INITIAL_LEGO_SETS);
         const [theme, setTheme] = useState(getInitialTheme);
+        const [searchQuery, setSearchQuery] = useState("");
     // Calculate the number of available LEGO sets
     const availableCount = legoSets.filter(
         (set) => set.available
     ).length;
+
+    const filteredSets = legoSets.filter((set) => {
+    const query = searchQuery.toLowerCase().trim();
+
+    return (
+        set.name.toLowerCase().includes(query) ||
+        set.category.toLowerCase().includes(query) ||
+        set.setNumber.includes(query)
+    );
+});
     function handleToggle(id) {
     setLegoSets((prev) =>
         prev.map((set) =>
@@ -139,16 +120,24 @@ function handleDelete(id) {
 
                 <section className="panel inventory-panel">
 
-                    <h2>LEGO Inventory</h2>
+            <h2>LEGO Inventory</h2>
 
-                    {/* Stage 3: raw data display */}
-                    <LegoList
-                    legoSets={legoSets}
-                    onToggle={handleToggle}
-                    onDelete={handleDelete}
-                    />
+            <SearchBar
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+            />
+            <p className="search-results-count">
+                Showing {filteredSets.length} of {legoSets.length} sets
+            </p>
+            
+            <LegoList
+                legoSets={filteredSets}
+                onToggle={handleToggle}
+                onDelete={handleDelete}
+                isSearching={searchQuery.trim().length > 0}
+            />
 
-                </section>
+        </section>
 
             </main>
 

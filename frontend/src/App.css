@@ -899,16 +899,12 @@ body {
 
 .item-list {
     list-style: none;
-
     padding: 0;
-
     margin: 0;
 
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 14px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
 }
 
 
@@ -1458,4 +1454,279 @@ body {
         --glow-pink: rgba(217, 130, 172, 0.12);
         --glow-mint: rgba(103, 196, 163, 0.12);
     }
+}
+/* =========================================================
+   LEGO SET IMAGES
+   ========================================================= */
+
+.lego-image {
+    display: block;
+
+    width: 100%;
+    max-width: 280px;
+    height: 190px;
+
+    margin-bottom: 16px;
+
+    object-fit: contain;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    transition: transform 0.3s ease;
+}
+
+.lego-image:hover {
+    transform: scale(1.04);
+}
+
+/* =========================================================
+   STAGE 5 - LEGO CATALOG GRID
+   ========================================================= */
+
+.item-list .item-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+
+    padding: 0;
+    overflow: hidden;
+
+    min-width: 0;
+}
+
+.lego-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 220px;
+    padding: 20px;
+
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.lego-image {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    margin: 0;
+
+    object-fit: contain;
+}
+
+.lego-image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: 100%;
+    height: 100%;
+
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+
+    background: var(--purple-soft);
+    color: var(--purple-dark);
+}
+
+.lego-image-placeholder span {
+    font-size: 2rem;
+    font-weight: 850;
+    letter-spacing: -0.06em;
+}
+
+.lego-image-placeholder small {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.item-list .item-info {
+    padding: 20px;
+    flex: 1;
+}
+
+.lego-category {
+    display: inline-block;
+    margin-bottom: 10px;
+
+    color: var(--purple-dark);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.item-list .item-info h3 {
+    margin-bottom: 5px;
+    font-size: 1.08rem;
+    line-height: 1.35;
+}
+
+.lego-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+
+    margin: 15px 0;
+
+    color: var(--muted);
+    font-size: 0.83rem;
+    font-weight: 600;
+}
+
+.item-list .item-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding: 16px 20px;
+
+    border-top: 1px solid var(--border);
+}
+
+.availability-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--text);
+    font-size: 0.82rem;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.availability-control input {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--mint-dark);
+    cursor: pointer;
+}
+
+/* Tablet */
+@media (max-width: 950px) {
+    .item-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .item-list {
+        grid-template-columns: 1fr;
+    }
+
+    .lego-image-container {
+        height: 240px;
+    }
+}
+
+/* =========================================================
+   BRICKSTORE - SEARCH BAR
+   ========================================================= */
+
+.search-container {
+    margin-bottom: 28px;
+}
+
+.search-label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: var(--muted);
+
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.search-input-wrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 17px;
+
+    color: var(--purple-dark);
+
+    font-size: 1.7rem;
+    line-height: 1;
+
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+
+    padding: 15px 18px 15px 49px;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    background: var(--card);
+    color: var(--text);
+
+    font: inherit;
+    font-size: 0.94rem;
+
+    outline: none;
+
+    box-shadow:
+        0 5px 18px var(--shadow);
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.4s ease;
+}
+
+.search-input::placeholder {
+    color: var(--muted);
+    opacity: 0.75;
+}
+
+.search-input:hover {
+    border-color: var(--purple);
+}
+
+.search-input:focus {
+    border-color: var(--purple-dark);
+
+    box-shadow:
+        0 0 0 4px var(--purple-soft),
+        0 8px 25px var(--shadow);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .search-input {
+        font-size: 0.85rem;
+        padding: 14px 14px 14px 45px;
+    }
+
+    .search-icon {
+        left: 14px;
+    }
+}
+
+/* =========================================================
+   SEARCH RESULTS
+   ========================================================= */
+
+.search-results-count {
+    margin: -10px 0 22px;
+
+    color: var(--muted);
+
+    font-size: 0.82rem;
+    font-weight: 600;
 }

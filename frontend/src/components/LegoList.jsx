@@ -1,10 +1,17 @@
 import LegoCard from "./LegoCard.jsx";
 
-export default function LegoList({ legoSets, onToggle, onDelete }) {
+export default function LegoList({
+    legoSets,
+    onToggle,
+    onDelete,
+    isSearching = false
+}) {
     if (legoSets.length === 0) {
         return (
             <p className="empty">
-                No LEGO sets in the inventory.
+                {isSearching
+                    ? "No LEGO sets match your search."
+                    : "No LEGO sets in the inventory."}
             </p>
         );
     }

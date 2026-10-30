@@ -8,37 +8,61 @@ export default function LegoCard({ set, onToggle, onDelete }) {
     return (
         <li className={set.available ? "item-card" : "item-card done"}>
 
-            <label className="item-main">
-                <input
-                    type="checkbox"
-                    checked={set.available}
-                    onChange={() => onToggle(set.id)}
-                    aria-label={`Mark ${set.name} as ${set.available ? "unavailable" : "available"}`}
-                />
+           <div className="lego-image-container">
+    <img
+        src={set.image}
+        alt={`LEGO ${set.name}`}
+        className="lego-image"
+        onError={(event) => {
+            event.currentTarget.style.display = "none";
+            event.currentTarget.nextElementSibling.style.display = "flex";
+        }}
+    />
 
-                <div className="item-info">
-                    <h3>{set.name}</h3>
+    <div
+        className="lego-image-placeholder"
+        style={{ display: "none" }}
+    >
+        <span>LEGO</span>
+        <small>#{set.setNumber}</small>
+    </div>
+</div>
 
-                    <p className="set-number">
-                        Set {set.setNumber}
-                    </p>
+            {/* Set information */}
+            <div className="item-info">
+                <span className="lego-category">{set.category}</span>
 
-                    <span className={`badge badge-${set.condition}`}>
-                        {CONDITION_LABELS[set.condition]}
+                <h3>{set.name}</h3>
+
+                <p className="set-number">Set #{set.setNumber}</p>
+
+                <div className="lego-details">
+                    <span>{set.pieces.toLocaleString("en-US")} pieces</span>
+
+                    <span>
+                        {set.price !== null
+                            ? `$${set.price.toFixed(2)}`
+                            : "Price unavailable"}
                     </span>
                 </div>
-            </label>
 
-            <div className="item-actions">
-                <span
-                    className={
-                        set.available
-                            ? "status status-available"
-                            : "status status-unavailable"
-                    }
-                >
-                    {set.available ? "Available" : "Unavailable"}
+                <span className={`badge badge-${set.condition}`}>
+                    {CONDITION_LABELS[set.condition]}
                 </span>
+            </div>
+
+            {/* Inventory actions */}
+            <div className="item-actions">
+                <label className="availability-control">
+                    <input
+                        type="checkbox"
+                        checked={set.available}
+                        onChange={() => onToggle(set.id)}
+                    />
+                    <span>
+                        {set.available ? "Available" : "Unavailable"}
+                    </span>
+                </label>
 
                 <button
                     type="button"
