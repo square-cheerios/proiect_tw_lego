@@ -1,3 +1,7 @@
+
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 const CONDITION_LABELS = {
     new: "New",
     used: "Used",
@@ -5,39 +9,68 @@ const CONDITION_LABELS = {
 };
 
 export default function LegoCard({ set, onToggle, onDelete }) {
+    const [failedImage, setFailedImage] = useState(null);
+
+    const hasImage =
+        Boolean(set.image) && failedImage !== set.image;
+
+    const productUrl = `/lego/${set.setNumber}`;
+
     return (
         <li className={set.available ? "item-card" : "item-card done"}>
 
-           <div className="lego-image-container">
-    <img
-        src={set.image}
-        alt={`LEGO ${set.name}`}
-        className="lego-image"
-        onError={(event) => {
-            event.currentTarget.style.display = "none";
-            event.currentTarget.nextElementSibling.style.display = "flex";
-        }}
-    />
+            {/* Clickable product image */}
+            <Link
+                to={productUrl}
+                className="lego-card-image-link"
+                aria-label={`View details for ${set.name}`}
+            >
+                <div className="lego-image-container">
+                    {hasImage ? (
+                        <img
+                            className="lego-image"
+                            src={set.image}
+                            alt={set.name}
+                            onError={() => setFailedImage(set.image)}
+                        />
+                    ) : (
+                        <div className="lego-image-placeholder">
+                            <span
+                                className="placeholder-icon"
+                                aria-hidden="true"
+                            >
+                                ◈
+                            </span>
+                            <span>No image available</span>
+                        </div>
+                    )}
+                </div>
+            </Link>
 
-    <div
-        className="lego-image-placeholder"
-        style={{ display: "none" }}
-    >
-        <span>LEGO</span>
-        <small>#{set.setNumber}</small>
-    </div>
-</div>
-
-            {/* Set information */}
+            {/* Product information */}
             <div className="item-info">
-                <span className="lego-category">{set.category}</span>
 
-                <h3>{set.name}</h3>
+                <span className="lego-category">
+                    {set.category}
+                </span>
 
-                <p className="set-number">Set #{set.setNumber}</p>
+                <h3>
+                    <Link
+                        to={productUrl}
+                        className="lego-card-title-link"
+                    >
+                        {set.name}
+                    </Link>
+                </h3>
+
+                <p className="set-number">
+                    Set #{set.setNumber}
+                </p>
 
                 <div className="lego-details">
-                    <span>{set.pieces.toLocaleString("en-US")} pieces</span>
+                    <span>
+                        {set.pieces.toLocaleString("en-US")} pieces
+                    </span>
 
                     <span>
                         {set.price !== null
@@ -49,10 +82,12 @@ export default function LegoCard({ set, onToggle, onDelete }) {
                 <span className={`badge badge-${set.condition}`}>
                     {CONDITION_LABELS[set.condition]}
                 </span>
+
             </div>
 
             {/* Inventory actions */}
             <div className="item-actions">
+
                 <label className="availability-control">
                     <input
                         type="checkbox"
@@ -60,7 +95,9 @@ export default function LegoCard({ set, onToggle, onDelete }) {
                         onChange={() => onToggle(set.id)}
                     />
                     <span>
-                        {set.available ? "Available" : "Unavailable"}
+                        {set.available
+                            ? "Available"
+                            : "Unavailable"}
                     </span>
                 </label>
 
@@ -72,8 +109,8 @@ export default function LegoCard({ set, onToggle, onDelete }) {
                 >
                     Delete
                 </button>
-            </div>
 
+            </div>
         </li>
     );
 }
