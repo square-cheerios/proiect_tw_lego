@@ -324,3 +324,71 @@ The following features were implemented beyond the basic React state requirement
 - React-controlled Light/Dark Mode.
 
 Individual LEGO set pages and React Router integration are planned for future development.
+
+## Stage 6: Data from a Mock REST API (useEffect)
+
+In Stage 6, BrickStore was updated to retrieve its LEGO inventory from a local REST API instead of importing the inventory directly from a JavaScript file.
+
+The application uses `json-server` to expose the 12 LEGO sets stored in `frontend/db.json` through the endpoint `GET /legoSets`.
+
+### Implementation
+
+- Installed `json-server@0.17.4` as a development dependency.
+- Created `frontend/db.json`, containing the 12 LEGO sets previously defined in `legoSets.js`.
+- Added the `npm run api` script to start the mock REST API on port `3001`.
+- Created `frontend/src/api.js` to centralize HTTP requests using `fetch()`, `async/await`, and `res.ok` validation.
+- Added `frontend/.env.example` to document the `VITE_API_URL` environment variable.
+- Updated `App.jsx` to load inventory data using `useEffect()` and React state.
+- Implemented loading, success, and error states.
+- Preserved existing features, including searching, availability toggling, deleting items, and light/dark mode.
+
+### Running the Application
+
+The application requires two development servers running simultaneously.
+
+**Terminal 1 — Mock REST API**
+
+```bash
+cd frontend
+npm run api
+```
+
+The API is available at `http://localhost:3001/legoSets`.
+
+**Terminal 2 — React Application**
+
+```bash
+cd frontend
+npm run dev
+```
+
+The React application is available at `http://localhost:5173`.
+
+### Testing
+
+The following scenarios were tested successfully:
+
+1. **Successful API response:** All 12 LEGO sets are loaded and displayed correctly.
+2. **Loading state:** A four-second artificial API delay was introduced to verify the loading message.
+3. **Error state:** The API server was stopped, and the application displayed an appropriate error message.
+4. **Network request:** The browser's developer tools confirmed a successful `GET /legoSets` request with HTTP status `200`.
+5. **Existing functionality:** Searching, availability toggling, and deleting LEGO sets continued to work.
+
+### Data Persistence
+
+Changes made through the React interface are currently stored only in component state. Deleting a LEGO set or changing its availability does not modify `db.json`.
+
+Therefore, refreshing the page restores the inventory from the API. This behavior is intentional for Stage 6. Persistent modifications will be introduced in a later stage.
+
+
+### Stage 6 Checklist
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S6-R1 | Mock REST API serves LEGO inventory | [db.json](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/frontend/db.json), [package.json](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/frontend/package.json) | Run `npm run api` and open `http://localhost:3001/legoSets` |
+| S6-R2 | Inventory data is loaded from the API | [App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/frontend/src/App.jsx) | Verify that `useEffect()` calls `fetchLegoSets()` instead of importing `INITIAL_LEGO_SETS` |
+| S6-R3 | Loading state is implemented | [App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/frontend/src/App.jsx) | Start the API with `--delay 4000` and refresh the page |
+| S6-R4 | API errors are handled | [App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/frontend/src/App.jsx) | Stop the API and refresh the page to display the error message |
+| S6-R5 | HTTP requests are centralized and API URL is configurable | [api.js](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/frontend/src/api.js), [.env.example](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/frontend/.env.example) | Verify `fetch()`, `res.ok`, and `VITE_API_URL` |
+| S6-R6 | README and AI usage log are updated | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/README.md), [etapa-06.md](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/ai-log/etapa-06.md) | Review the Stage 6 documentation and AI log |
+| S6-R7 | Stage 6 changes are committed and pushed | [Stage 6 commit](https://github.com/square-cheerios/proiect_tw_lego/commit/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1) | Open the commit and inspect the changed files |
