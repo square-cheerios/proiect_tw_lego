@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // =====================================================
 // BRICKSTORE - STAGE 3
 // =====================================================
 
 // Initial LEGO inventory data from Stage 2
 import LegoList from "./components/LegoList.jsx";
-import { INITIAL_LEGO_SETS } from "./data/legoSets.js";
+import { fetchLegoSets } from "./api.js";
 
 
 import SearchBar from "./components/SearchBar.jsx";
@@ -24,9 +24,38 @@ function getInitialTheme() {
 }
 
 export default function App() {
-        const [legoSets, setLegoSets] = useState(INITIAL_LEGO_SETS);
+        const [legoSets, setLegoSets] = useState([]);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState(null);
         const [theme, setTheme] = useState(getInitialTheme);
         const [searchQuery, setSearchQuery] = useState("");
+    useEffect(() => {
+    let ignore = false;
+
+    async function loadLegoSets() {
+        try {
+            const data = await fetchLegoSets();
+
+            if (!ignore) {
+                setLegoSets(data);
+            }
+        } catch (err) {
+            if (!ignore) {
+                setError(err.message);
+            }
+        } finally {
+            if (!ignore) {
+                setLoading(false);
+            }
+        }
+    }
+
+    loadLegoSets();
+
+    return () => {
+        ignore = true;
+    };
+}, []);
     // Calculate the number of available LEGO sets
     const availableCount = legoSets.filter(
         (set) => set.available
@@ -130,12 +159,27 @@ function handleDelete(id) {
                 Showing {filteredSets.length} of {legoSets.length} sets
             </p>
             
-            <LegoList
-                legoSets={filteredSets}
-                onToggle={handleToggle}
-                onDelete={handleDelete}
-                isSearching={searchQuery.trim().length > 0}
-            />
+            {loading && (
+    <p className="info">
+        Loading LEGO sets...
+    </p>
+)}
+
+{error && (
+    <p className="error">
+        Could not load LEGO sets: {error}.
+        Is the API running? Start it with <code>npm run api</code>.
+    </p>
+)}
+
+{!loading && !error && (
+    <LegoList
+        legoSets={filteredSets}
+        onToggle={handleToggle}
+        onDelete={handleDelete}
+        isSearching={searchQuery.trim().length > 0}
+    />
+)}
 
         </section>
 

@@ -1730,3 +1730,28 @@ body {
     font-size: 0.82rem;
     font-weight: 600;
 }
+
+/* Stage 6 - API loading and error states */
+
+.info {
+    text-align: center;
+    padding: 24px;
+    color: var(--muted);
+}
+
+.error {
+    text-align: center;
+    padding: 16px 20px;
+    margin: 16px 0;
+
+    color: #9d174d;
+    background: #fdf2f8;
+    border: 1px solid #fbcfe8;
+    border-radius: 12px;
+}
+
+[data-theme="dark"] .error {
+    color: #f9a8d4;
+    background: #3b1d2e;
+    border-color: #6b2a4a;
+}
