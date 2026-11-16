@@ -7,13 +7,18 @@ import SearchBar from "./components/SearchBar.jsx";
 import AddLegoForm from "./components/AddLegoForm.jsx";
 import LegoDetails from "./pages/LegoDetails.jsx";
 
-import { fetchLegoSets } from "./api.js";
+import {
+    fetchLegoSets,
+    createLegoSet,
+    updateLegoSet,
+    deleteLegoSet
+} from "./api.js";
 
 // =====================================================
-// BRICKSTORE - MAIN APPLICATION
+// BRICKSTORE - STAGE 7
+// Main application with persistent CRUD operations
 // =====================================================
 
-// Detect the system's preferred color scheme
 function getInitialTheme() {
     const initialTheme = window.matchMedia(
         "(prefers-color-scheme: dark)"
@@ -27,13 +32,15 @@ function getInitialTheme() {
 }
 
 export default function App() {
+
     // =================================================
     // REACT STATE
     // =================================================
 
     const [legoSets, setLegoSets] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [loadError, setLoadError] = useState(null);
+    const [actionError, setActionError] = useState(null);
 
     const [theme, setTheme] = useState(getInitialTheme);
     const [searchQuery, setSearchQuery] = useState("");
@@ -52,10 +59,11 @@ export default function App() {
 
                 if (!ignore) {
                     setLegoSets(data);
+                    setLoadError(null);
                 }
             } catch (err) {
                 if (!ignore) {
-                    setError(err.message);
+                    setLoadError(err.message);
                 }
             } finally {
                 if (!ignore) {
@@ -85,34 +93,77 @@ export default function App() {
         return (
             set.name.toLowerCase().includes(query) ||
             set.category.toLowerCase().includes(query) ||
-            set.setNumber.includes(query)
+            String(set.setNumber).includes(query)
         );
     });
 
     // =================================================
-    // INVENTORY ACTIONS
+    // CRUD OPERATIONS
     // =================================================
 
-    function handleToggle(id) {
-        setLegoSets((prev) =>
-            prev.map((set) =>
-                set.id === id
-                    ? { ...set, available: !set.available }
-                    : set
-            )
-        );
-    }
+    // POST - Add a new LEGO set
+    async function handleAdd(newSet) {
+        // The server generates the ID.
+        // Update React state only after POST succeeds.
+        const createdSet = await createLegoSet(newSet);
 
-    function handleDelete(id) {
-        setLegoSets((prev) =>
-            prev.filter((set) => set.id !== id)
-        );
-    }
+        setLegoSets((prev) => [...prev, createdSet]);
 
-    function handleAdd(newSet) {
-        setLegoSets((prev) => [...prev, newSet]);
-        setShowAddForm(false);
+        setActionError(null);
         setSearchQuery("");
+        setShowAddForm(false);
+    }
+
+    // PATCH - Update availability
+    async function handleToggle(id) {
+        const legoSet = legoSets.find(
+            (set) => String(set.id) === String(id)
+        );
+
+        if (!legoSet) {
+            return;
+        }
+
+        setActionError(null);
+
+        try {
+            const updatedSet = await updateLegoSet(id, {
+                available: !legoSet.available
+            });
+
+            // Use the object returned by the server
+            setLegoSets((prev) =>
+                prev.map((set) =>
+                    String(set.id) === String(id)
+                        ? updatedSet
+                        : set
+                )
+            );
+        } catch (err) {
+            setActionError(
+                `Could not update availability: ${err.message}`
+            );
+        }
+    }
+
+    // DELETE - Remove a LEGO set
+    async function handleDelete(id) {
+        setActionError(null);
+
+        try {
+            await deleteLegoSet(id);
+
+            // Remove only after server confirmation
+            setLegoSets((prev) =>
+                prev.filter(
+                    (set) => String(set.id) !== String(id)
+                )
+            );
+        } catch (err) {
+            setActionError(
+                `Could not delete LEGO set: ${err.message}`
+            );
+        }
     }
 
     // =================================================
@@ -231,7 +282,7 @@ export default function App() {
                                             )
                                         }
                                         disabled={
-                                            loading || Boolean(error)
+                                            loading || Boolean(loadError)
                                         }
                                     >
                                         {showAddForm
@@ -262,23 +313,41 @@ export default function App() {
 
                                 {/* Loading state */}
                                 {loading && (
-                                    <p className="info">
+                                    <p
+                                        className="info"
+                                        data-testid="loading"
+                                    >
                                         Loading LEGO sets...
                                     </p>
                                 )}
 
-                                {/* Error state */}
-                                {error && (
-                                    <p className="error">
+                                {/* Initial loading error */}
+                                {loadError && (
+                                    <p
+                                        className="error"
+                                        data-testid="error"
+                                        role="alert"
+                                    >
                                         Could not load LEGO sets:{" "}
-                                        {error}.
+                                        {loadError}.
                                         Is the API running? Start it
                                         with <code>npm run api</code>.
                                     </p>
                                 )}
 
+                                {/* CRUD operation error */}
+                                {actionError && (
+                                    <p
+                                        className="error"
+                                        data-testid="error"
+                                        role="alert"
+                                    >
+                                        {actionError}
+                                    </p>
+                                )}
+
                                 {/* LEGO inventory */}
-                                {!loading && !error && (
+                                {!loading && !loadError && (
                                     <LegoList
                                         legoSets={filteredSets}
                                         onToggle={handleToggle}
@@ -305,7 +374,7 @@ export default function App() {
                         <LegoDetails
                             legoSets={legoSets}
                             loading={loading}
-                            error={error}
+                            error={loadError}
                         />
                     }
                 />

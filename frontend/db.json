@@ -227,6 +227,21 @@
       ],
       "description": "A LEGO Technic recreation of the McLaren P1 hypercar, featuring complex mechanical details and an aerodynamic body.",
       "instructionsUrl": "https://www.lego.com/en-us/service/buildinginstructions/42172"
+    },
+    {
+      "name": "Test",
+      "setNumber": "1234567",
+      "category": "Bleh",
+      "pieces": 1,
+      "price": null,
+      "currency": "USD",
+      "condition": "new",
+      "available": true,
+      "image": "",
+      "images": [],
+      "description": "",
+      "instructionsUrl": "https://www.lego.com/en-us/service/buildinginstructions/1234567",
+      "id": 13
     }
   ]
 }

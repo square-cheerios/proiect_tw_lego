@@ -1,5 +1,10 @@
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+// =====================================================
+// BRICKSTORE - STAGE 7
+// Controlled form with validation and API submission
+// =====================================================
 
 const INITIAL_FORM = {
     name: "",
@@ -14,9 +19,13 @@ const INITIAL_FORM = {
 };
 
 export default function AddLegoForm({ onAdd, existingSets }) {
-    const [form, setForm] = useState(INITIAL_FORM);
+    const [form, setForm] = useState({ ...INITIAL_FORM });
     const [formError, setFormError] = useState("");
+    const [invalidField, setInvalidField] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const submittingRef = useRef(false);
 
+    // Update the corresponding field in React state
     function handleChange(event) {
         const { name, value, type, checked } = event.target;
 
@@ -24,12 +33,15 @@ export default function AddLegoForm({ onAdd, existingSets }) {
             ...prev,
             [name]: type === "checkbox" ? checked : value
         }));
+
+        if (formError) {
+            setFormError("");
+            setInvalidField("");
+        }
     }
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        setFormError("");
-
+    // Validate before sending anything to the API
+    function validateForm() {
         const name = form.name.trim();
         const setNumber = form.setNumber.trim();
         const category = form.category.trim();
@@ -38,57 +50,122 @@ export default function AddLegoForm({ onAdd, existingSets }) {
             ? null
             : Number(form.price);
 
-        if (!name || !setNumber || !category) {
-            setFormError("Please complete all required fields.");
-            return;
+        if (!name) {
+            return ["name", "Set name is required."];
+        }
+
+        if (name.length > 100) {
+            return ["name", "Set name must have at most 100 characters."];
+        }
+
+        if (!setNumber) {
+            return ["setNumber", "Set number is required."];
         }
 
         if (!/^\d+$/.test(setNumber)) {
-            setFormError("Set number must contain only digits.");
+            return ["setNumber", "Set number must contain only digits."];
+        }
+
+        if (!category) {
+            return ["category", "Category is required."];
+        }
+
+        if (
+            form.pieces.trim() === "" ||
+            !Number.isInteger(pieces) ||
+            pieces <= 0
+        ) {
+            return ["pieces", "Please enter a valid number of pieces."];
+        }
+
+        if (
+            price !== null &&
+            (!Number.isFinite(price) || price < 0)
+        ) {
+            return ["price", "Please enter a valid price."];
+        }
+
+        if (
+            existingSets.some(
+                (set) => String(set.setNumber) === setNumber
+            )
+        ) {
+            return ["setNumber", "This LEGO set number already exists."];
+        }
+
+        return ["", ""];
+    }
+
+    // Submit the new LEGO set to the API
+    async function handleSubmit(event) {
+        event.preventDefault();
+
+        // Prevent duplicate requests
+        if (submittingRef.current) {
             return;
         }
 
-        if (!Number.isInteger(pieces) || pieces <= 0) {
-            setFormError("Please enter a valid number of pieces.");
+        const [field, message] = validateForm();
+
+        if (message) {
+            setInvalidField(field);
+            setFormError(message);
             return;
         }
 
-        if (price !== null && (!Number.isFinite(price) || price < 0)) {
-            setFormError("Please enter a valid price.");
-            return;
-        }
+        setFormError("");
+        setInvalidField("");
+        submittingRef.current = true;
+        setIsSubmitting(true);
 
-        if (existingSets.some((set) => set.setNumber === setNumber)) {
-            setFormError("This LEGO set number already exists.");
-            return;
-        }
+        const setNumber = form.setNumber.trim();
+        const image = form.image.trim();
 
+        // The server generates the ID
         const newSet = {
-            id: Math.max(0, ...existingSets.map((set) => Number(set.id) || 0)) + 1,
-            name,
+            name: form.name.trim(),
             setNumber,
-            category,
-            pieces,
-            price,
+            category: form.category.trim(),
+            pieces: Number(form.pieces),
+            price: form.price.trim() === ""
+                ? null
+                : Number(form.price),
             currency: "USD",
             condition: form.condition,
             available: form.available,
-            image: form.image.trim(),
-            images: form.image.trim() ? [form.image.trim()] : [],
+            image,
+            images: image ? [image] : [],
             description: form.description.trim(),
             instructionsUrl:
                 `https://www.lego.com/en-us/service/buildinginstructions/${setNumber}`
         };
 
-        onAdd(newSet);
-        setForm({ ...INITIAL_FORM });
+        try {
+            // App.jsx will send the POST request
+            await onAdd(newSet);
+
+            // Clear the form only after successful saving
+            setForm({ ...INITIAL_FORM });
+        } catch (error) {
+            // Keep the entered values when saving fails
+            setFormError(error.message);
+        } finally {
+            submittingRef.current = false;
+            setIsSubmitting(false);
+        }
     }
 
     return (
-        <form className="add-lego-form" onSubmit={handleSubmit}>
+        <form
+            className="add-lego-form"
+            onSubmit={handleSubmit}
+            noValidate
+            data-testid="form"
+        >
             <h3>Add a New LEGO Set</h3>
 
             <div className="form-grid">
+
                 <label>
                     Set Name *
                     <input
@@ -96,7 +173,9 @@ export default function AddLegoForm({ onAdd, existingSets }) {
                         value={form.name}
                         onChange={handleChange}
                         placeholder="e.g. LEGO Bonsai Tree"
-                        required
+                        maxLength={100}
+                        aria-invalid={invalidField === "name"}
+                        data-testid="form-title"
                     />
                 </label>
 
@@ -107,7 +186,8 @@ export default function AddLegoForm({ onAdd, existingSets }) {
                         value={form.setNumber}
                         onChange={handleChange}
                         placeholder="e.g. 10281"
-                        required
+                        aria-invalid={invalidField === "setNumber"}
+                        data-testid="form-setNumber"
                     />
                 </label>
 
@@ -118,7 +198,8 @@ export default function AddLegoForm({ onAdd, existingSets }) {
                         value={form.category}
                         onChange={handleChange}
                         placeholder="e.g. Icons"
-                        required
+                        aria-invalid={invalidField === "category"}
+                        data-testid="form-category"
                     />
                 </label>
 
@@ -131,7 +212,8 @@ export default function AddLegoForm({ onAdd, existingSets }) {
                         onChange={handleChange}
                         min="1"
                         step="1"
-                        required
+                        aria-invalid={invalidField === "pieces"}
+                        data-testid="form-pieces"
                     />
                 </label>
 
@@ -145,6 +227,8 @@ export default function AddLegoForm({ onAdd, existingSets }) {
                         min="0"
                         step="0.01"
                         placeholder="Optional"
+                        aria-invalid={invalidField === "price"}
+                        data-testid="form-price"
                     />
                 </label>
 
@@ -154,12 +238,14 @@ export default function AddLegoForm({ onAdd, existingSets }) {
                         name="condition"
                         value={form.condition}
                         onChange={handleChange}
+                        data-testid="form-condition"
                     >
                         <option value="new">New</option>
                         <option value="sealed">Sealed</option>
                         <option value="used">Used</option>
                     </select>
                 </label>
+
             </div>
 
             <label>
@@ -169,6 +255,7 @@ export default function AddLegoForm({ onAdd, existingSets }) {
                     value={form.image}
                     onChange={handleChange}
                     placeholder="https://example.com/lego.jpg"
+                    data-testid="form-image"
                 />
             </label>
 
@@ -180,6 +267,7 @@ export default function AddLegoForm({ onAdd, existingSets }) {
                     onChange={handleChange}
                     rows="3"
                     placeholder="Describe your LEGO set..."
+                    data-testid="form-description"
                 />
             </label>
 
@@ -189,18 +277,30 @@ export default function AddLegoForm({ onAdd, existingSets }) {
                     name="available"
                     checked={form.available}
                     onChange={handleChange}
+                    data-testid="form-available"
                 />
                 Available in inventory
             </label>
 
             {formError && (
-                <p className="form-error" role="alert">
+                <p
+                    className="form-error"
+                    role="alert"
+                    data-testid="form-error"
+                >
                     {formError}
                 </p>
             )}
 
-            <button type="submit" className="add-lego-submit">
-                + Add to Inventory
+            <button
+                type="submit"
+                className="add-lego-submit"
+                disabled={isSubmitting}
+                data-testid="form-submit"
+            >
+                {isSubmitting
+                    ? "Saving..."
+                    : "+ Add to Inventory"}
             </button>
         </form>
     );

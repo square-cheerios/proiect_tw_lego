@@ -17,7 +17,11 @@ export default function LegoCard({ set, onToggle, onDelete }) {
     const productUrl = `/lego/${set.setNumber}`;
 
     return (
-        <li className={set.available ? "item-card" : "item-card done"}>
+        <li
+            className={set.available ? "item-card" : "item-card done"}
+            data-testid="item"
+            data-id={set.id}
+        >
 
             {/* Clickable product image */}
             <Link
@@ -54,7 +58,7 @@ export default function LegoCard({ set, onToggle, onDelete }) {
                     {set.category}
                 </span>
 
-                <h3>
+                <h3 data-testid="item-title">
                     <Link
                         to={productUrl}
                         className="lego-card-title-link"
@@ -93,6 +97,7 @@ export default function LegoCard({ set, onToggle, onDelete }) {
                         type="checkbox"
                         checked={set.available}
                         onChange={() => onToggle(set.id)}
+                        data-testid="item-toggle"
                     />
                     <span>
                         {set.available
@@ -106,6 +111,7 @@ export default function LegoCard({ set, onToggle, onDelete }) {
                     className="btn-danger"
                     onClick={() => onDelete(set.id)}
                     aria-label={`Delete ${set.name}`}
+                    data-testid="item-delete"
                 >
                     Delete
                 </button>

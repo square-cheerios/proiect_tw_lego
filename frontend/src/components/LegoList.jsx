@@ -1,3 +1,4 @@
+
 import LegoCard from "./LegoCard.jsx";
 
 export default function LegoList({
@@ -8,7 +9,7 @@ export default function LegoList({
 }) {
     if (legoSets.length === 0) {
         return (
-            <p className="empty">
+            <p className="empty" data-testid="empty">
                 {isSearching
                     ? "No LEGO sets match your search."
                     : "No LEGO sets in the inventory."}
