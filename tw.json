@@ -1,0 +1,15 @@
+
+{
+  "resource": "legoSets",
+  "title": "name",
+  "done": "available",
+  "sample": {
+    "setNumber": "99998",
+    "category": "Test",
+    "pieces": 100,
+    "price": 19.99,
+    "condition": "new",
+    "image": "",
+    "description": "Test LEGO set"
+  }
+}
