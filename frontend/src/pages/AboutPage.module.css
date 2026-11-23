@@ -1,0 +1,30 @@
+
+.aboutPage {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+.aboutPage h2 {
+    margin-bottom: 20px;
+}
+
+.aboutPage p {
+    line-height: 1.8;
+    margin-bottom: 16px;
+}
+
+.aboutPage a {
+    color: var(--purple-dark);
+    font-weight: 650;
+}
+
+.aboutPage a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .aboutPage {
+        padding: 20px;
+    }
+}

@@ -2,10 +2,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import styles from "./LegoCard.module.css";
+
 const CONDITION_LABELS = {
     new: "New",
     used: "Used",
-    sealed: "Sealed"
+    sealed: "Sealed",
 };
 
 export default function LegoCard({ set, onToggle, onDelete }) {
@@ -14,33 +16,42 @@ export default function LegoCard({ set, onToggle, onDelete }) {
     const hasImage =
         Boolean(set.image) && failedImage !== set.image;
 
-    const productUrl = `/lego/${set.setNumber}`;
+    const productUrl = `/legoSets/${set.id}`;
+
+    const conditionClass = {
+        new: styles.badgeNew,
+        used: styles.badgeUsed,
+        sealed: styles.badgeSealed,
+    }[set.condition];
 
     return (
         <li
-            className={set.available ? "item-card" : "item-card done"}
+            className={`${styles.itemCard} ${
+                !set.available ? styles.done : ""
+            }`}
             data-testid="item"
             data-id={set.id}
         >
-
-            {/* Clickable product image */}
+            {/* Product image */}
             <Link
                 to={productUrl}
-                className="lego-card-image-link"
-                aria-label={`View details for ${set.name}`}
+                className={styles.imageLink}
+                aria-label={`View ${set.name}`}
             >
-                <div className="lego-image-container">
+                <div className={styles.imageContainer}>
                     {hasImage ? (
                         <img
-                            className="lego-image"
+                            className={styles.image}
                             src={set.image}
                             alt={set.name}
-                            onError={() => setFailedImage(set.image)}
+                            onError={() =>
+                                setFailedImage(set.image)
+                            }
                         />
                     ) : (
-                        <div className="lego-image-placeholder">
+                        <div className={styles.imagePlaceholder}>
                             <span
-                                className="placeholder-icon"
+                                className={styles.placeholderIcon}
                                 aria-hidden="true"
                             >
                                 ◈
@@ -52,50 +63,52 @@ export default function LegoCard({ set, onToggle, onDelete }) {
             </Link>
 
             {/* Product information */}
-            <div className="item-info">
-
-                <span className="lego-category">
+            <div className={styles.itemInfo}>
+                <span className={styles.category}>
                     {set.category}
                 </span>
 
-                <h3 data-testid="item-title">
+                <h3>
                     <Link
                         to={productUrl}
-                        className="lego-card-title-link"
+                        className={styles.titleLink}
+                        data-testid="item-link"
                     >
                         {set.name}
                     </Link>
                 </h3>
 
-                <p className="set-number">
+                <p className={styles.setNumber}>
                     Set #{set.setNumber}
                 </p>
 
-                <div className="lego-details">
+                <div className={styles.details}>
                     <span>
-                        {set.pieces.toLocaleString("en-US")} pieces
+                        {Number(set.pieces).toLocaleString("en-US")} pieces
                     </span>
 
                     <span>
-                        {set.price !== null
-                            ? `$${set.price.toFixed(2)}`
+                        {set.price != null
+                            ? `$${Number(set.price).toFixed(2)}`
                             : "Price unavailable"}
                     </span>
                 </div>
 
-                <span className={`badge badge-${set.condition}`}>
-                    {CONDITION_LABELS[set.condition]}
+                <span
+                    className={`${styles.badge} ${
+                        conditionClass || ""
+                    }`}
+                >
+                    {CONDITION_LABELS[set.condition] || set.condition}
                 </span>
-
             </div>
 
             {/* Inventory actions */}
-            <div className="item-actions">
-
-                <label className="availability-control">
+            <div className={styles.itemActions}>
+                <label className={styles.availabilityControl}>
                     <input
                         type="checkbox"
-                        checked={set.available}
+                        checked={Boolean(set.available)}
                         onChange={() => onToggle(set.id)}
                         data-testid="item-toggle"
                     />
@@ -108,14 +121,13 @@ export default function LegoCard({ set, onToggle, onDelete }) {
 
                 <button
                     type="button"
-                    className="btn-danger"
+                    className={styles.deleteButton}
                     onClick={() => onDelete(set.id)}
                     aria-label={`Delete ${set.name}`}
                     data-testid="item-delete"
                 >
                     Delete
                 </button>
-
             </div>
         </li>
     );

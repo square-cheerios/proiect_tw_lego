@@ -1,6 +1,8 @@
 
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { fetchLegoSet } from "../api.js";
+import styles from "./LegoDetails.module.css";
 
 const CONDITION_LABELS = {
     new: "New",
@@ -8,27 +10,52 @@ const CONDITION_LABELS = {
     sealed: "Sealed"
 };
 
-export default function LegoDetails({ legoSets, loading, error }) {
-    const { setNumber } = useParams();
+export default function LegoDetails() {
+    const { id } = useParams();
+    const [legoSet, setLegoSet] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const legoSet = legoSets.find(
-        (set) => String(set.setNumber) === setNumber
-    );
+    useEffect(() => {
+        let ignore = false;
+
+        // Each URL ID requests its own product from the API.
+        async function loadProduct() {
+            try {
+                const data = await fetchLegoSet(id);
+                if (!ignore) {
+                    setLegoSet(data);
+                    setError(null);
+                }
+            } catch (err) {
+                if (!ignore) {
+                    setLegoSet(null);
+                    setError(err.message);
+                }
+            } finally {
+                if (!ignore) setLoading(false);
+            }
+        }
+
+        loadProduct();
+        return () => { ignore = true; };
+    }, [id]);
 
     if (loading) {
         return (
             <main className="container">
-                <p className="info">Loading LEGO set...</p>
+                <p className="info" data-testid="loading">Loading LEGO set...</p>
             </main>
         );
     }
 
-    if (error) {
+    if (error || !legoSet || String(legoSet.id) !== String(id)) {
         return (
             <main className="container">
                 <section className="panel">
-                    <p className="error">
-                        Could not load LEGO set: {error}
+                    <h2>LEGO Set Not Found</h2>
+                    <p className="error" data-testid="error" role="alert">
+                        Could not load LEGO set: {error || "Product not found"}
                     </p>
                     <Link to="/">← Back to Inventory</Link>
                 </section>
@@ -36,24 +63,7 @@ export default function LegoDetails({ legoSets, loading, error }) {
         );
     }
 
-    if (!legoSet) {
-        return (
-            <main className="container">
-                <section className="panel">
-                    <h2>LEGO Set Not Found</h2>
-                    <p>This set is not in your current inventory.</p>
-                    <Link to="/">← Back to Inventory</Link>
-                </section>
-            </main>
-        );
-    }
-
-    return (
-        <LegoProduct
-            key={legoSet.setNumber}
-            legoSet={legoSet}
-        />
-    );
+    return <LegoProduct key={id} legoSet={legoSet} />;
 }
 
 function LegoProduct({ legoSet }) {
@@ -120,20 +130,20 @@ function LegoProduct({ legoSet }) {
 
     return (
         <main className="container">
-            <section className="panel lego-details-page">
+            <section className={`panel ${styles.legoDetailsPage}`} data-testid="detail">
 
-                <Link to="/" className="back-to-inventory">
+                <Link to="/" className={styles.backToInventory}>
                     ← Back to Inventory
                 </Link>
 
-                <div className="lego-product-layout">
+                <div className={styles.legoProductLayout}>
 
                     {/* PRODUCT GALLERY */}
-                    <div className="lego-gallery">
+                    <div className={styles.legoGallery}>
 
                         <button
                             type="button"
-                            className="lego-gallery-main"
+                            className={styles.legoGalleryMain}
                             onClick={() =>
                                 currentImage && setLightboxOpen(true)
                             }
@@ -149,8 +159,8 @@ function LegoProduct({ legoSet }) {
                                     }
                                 />
                             ) : (
-                                <div className="lego-image-placeholder">
-                                    <span className="placeholder-icon">
+                                <div className={styles.legoImagePlaceholder}>
+                                    <span className={styles.placeholderIcon}>
                                         ◈
                                     </span>
                                     <span>No image available</span>
@@ -158,7 +168,7 @@ function LegoProduct({ legoSet }) {
                             )}
 
                             {currentImage && (
-                                <span className="gallery-zoom-hint">
+                                <span className={styles.galleryZoomHint}>
                                     ⤢ Click to enlarge
                                 </span>
                             )}
@@ -166,15 +176,15 @@ function LegoProduct({ legoSet }) {
 
                         {/* Scrollable thumbnail strip */}
                         {availableImages.length > 1 && (
-                            <div className="lego-gallery-thumbnails">
+                            <div className={styles.legoGalleryThumbnails}>
                                 {availableImages.map((image, index) => (
                                     <button
                                         type="button"
                                         key={image}
                                         className={
                                             safeIndex === index
-                                                ? "gallery-thumbnail active"
-                                                : "gallery-thumbnail"
+                                                ? `${styles.galleryThumbnail} ${styles.active}`
+                                                : styles.galleryThumbnail
                                         }
                                         onClick={() =>
                                             setActiveImage(index)
@@ -193,7 +203,7 @@ function LegoProduct({ legoSet }) {
                             </div>
                         )}
 
-                        <p className="gallery-caption">
+                        <p className={styles.galleryCaption}>
                             {availableImages.length > 0
                                 ? `${safeIndex + 1} / ${availableImages.length} photos`
                                 : "No photos available"}
@@ -201,19 +211,19 @@ function LegoProduct({ legoSet }) {
                     </div>
 
                     {/* PRODUCT INFORMATION */}
-                    <div className="lego-product-info">
+                    <div className={styles.legoProductInfo}>
 
-                        <span className="lego-category">
+                        <span className={styles.legoCategory}>
                             {legoSet.category}
                         </span>
 
-                        <h2>{legoSet.name}</h2>
+                        <h2 data-testid="detail-title">{legoSet.name}</h2>
 
-                        <p className="set-number">
+                        <p className={styles.setNumber}>
                             LEGO Set #{legoSet.setNumber}
                         </p>
 
-                        <div className="product-price">
+                        <div className={styles.productPrice}>
                             {legoSet.price != null
                                 ? `$${Number(legoSet.price).toFixed(2)}`
                                 : "Price unavailable"}
@@ -221,19 +231,19 @@ function LegoProduct({ legoSet }) {
 
                         <span className={
                             legoSet.available
-                                ? "product-stock in-stock"
-                                : "product-stock out-of-stock"
+                                ? `${styles.productStock} ${styles.inStock}`
+                                : `${styles.productStock} ${styles.outOfStock}`
                         }>
                             {legoSet.available
                                 ? "● In stock"
                                 : "● Unavailable"}
                         </span>
 
-                        <div className="product-specifications">
+                        <div className={styles.productSpecifications}>
                             <div>
                                 <span>Pieces</span>
                                 <strong>
-                                    {legoSet.pieces.toLocaleString("en-US")}
+                                    {Number(legoSet.pieces).toLocaleString("en-US")}
                                 </strong>
                             </div>
 
@@ -256,7 +266,7 @@ function LegoProduct({ legoSet }) {
                             </div>
                         </div>
 
-                        <div className="product-description">
+                        <div className={styles.productDescription}>
                             <h3>About this LEGO Set</h3>
                             <p>
                                 {legoSet.description ||
@@ -269,7 +279,7 @@ function LegoProduct({ legoSet }) {
                                 href={legoSet.instructionsUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="instructions-button"
+                                className={styles.instructionsButton}
                             >
                                 View Building Instructions ↗
                             </a>
@@ -281,12 +291,12 @@ function LegoProduct({ legoSet }) {
             {/* FULLSCREEN LIGHTBOX */}
             {lightboxOpen && currentImage && (
                 <div
-                    className="lego-lightbox"
+                    className={styles.legoLightbox}
                     role="presentation"
                     onClick={() => setLightboxOpen(false)}
                 >
                     <div
-                        className="lightbox-content"
+                        className={styles.lightboxContent}
                         role="dialog"
                         aria-modal="true"
                         aria-label={`${legoSet.name} photo gallery`}
@@ -294,7 +304,7 @@ function LegoProduct({ legoSet }) {
                     >
                         <button
                             type="button"
-                            className="lightbox-close"
+                            className={styles.lightboxClose}
                             onClick={() => setLightboxOpen(false)}
                             aria-label="Close image"
                         >
@@ -304,7 +314,7 @@ function LegoProduct({ legoSet }) {
                         {availableImages.length > 1 && (
                             <button
                                 type="button"
-                                className="lightbox-arrow prev"
+                                className={`${styles.lightboxArrow} ${styles.prev}`}
                                 onClick={() => changeImage(-1)}
                                 aria-label="Previous image"
                             >
@@ -313,7 +323,7 @@ function LegoProduct({ legoSet }) {
                         )}
 
                         <img
-                            className="lightbox-image"
+                            className={styles.lightboxImage}
                             src={currentImage}
                             alt={legoSet.name}
                             onError={() =>
@@ -324,7 +334,7 @@ function LegoProduct({ legoSet }) {
                         {availableImages.length > 1 && (
                             <button
                                 type="button"
-                                className="lightbox-arrow next"
+                                className={`${styles.lightboxArrow} ${styles.next}`}
                                 onClick={() => changeImage(1)}
                                 aria-label="Next image"
                             >
@@ -332,7 +342,7 @@ function LegoProduct({ legoSet }) {
                             </button>
                         )}
 
-                        <span className="lightbox-counter">
+                        <span className={styles.lightboxCounter}>
                             {safeIndex + 1} / {availableImages.length}
                         </span>
                     </div>

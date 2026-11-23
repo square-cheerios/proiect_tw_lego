@@ -1,15 +1,16 @@
 
 import LegoCard from "./LegoCard.jsx";
+import styles from "./LegoList.module.css";
 
 export default function LegoList({
     legoSets,
     onToggle,
     onDelete,
-    isSearching = false
+    isSearching = false,
 }) {
     if (legoSets.length === 0) {
         return (
-            <p className="empty" data-testid="empty">
+            <p className={styles.empty} data-testid="empty">
                 {isSearching
                     ? "No LEGO sets match your search."
                     : "No LEGO sets in the inventory."}
@@ -18,7 +19,7 @@ export default function LegoList({
     }
 
     return (
-        <ul className="item-list">
+        <ul className={styles.itemList}>
             {legoSets.map((set) => (
                 <LegoCard
                     key={set.id}

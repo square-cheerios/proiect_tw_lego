@@ -1,9 +1,11 @@
 
 import { useRef, useState } from "react";
+import styles from "./AddLegoForm.module.css";
 
 // =====================================================
-// BRICKSTORE - STAGE 7
-// Controlled form with validation and API submission
+// BRICKSTORE - STAGE 8
+// Controlled form with validation, API submission
+// and component-scoped CSS Modules
 // =====================================================
 
 const INITIAL_FORM = {
@@ -141,7 +143,7 @@ export default function AddLegoForm({ onAdd, existingSets }) {
         };
 
         try {
-            // App.jsx will send the POST request
+            // InventoryPage.jsx sends the POST request
             await onAdd(newSet);
 
             // Clear the form only after successful saving
@@ -157,14 +159,14 @@ export default function AddLegoForm({ onAdd, existingSets }) {
 
     return (
         <form
-            className="add-lego-form"
+            className={styles.addLegoForm}
             onSubmit={handleSubmit}
             noValidate
             data-testid="form"
         >
             <h3>Add a New LEGO Set</h3>
 
-            <div className="form-grid">
+            <div className={styles.formGrid}>
 
                 <label>
                     Set Name *
@@ -271,7 +273,7 @@ export default function AddLegoForm({ onAdd, existingSets }) {
                 />
             </label>
 
-            <label className="availability-checkbox">
+            <label className={styles.availabilityCheckbox}>
                 <input
                     type="checkbox"
                     name="available"
@@ -284,7 +286,7 @@ export default function AddLegoForm({ onAdd, existingSets }) {
 
             {formError && (
                 <p
-                    className="form-error"
+                    className={styles.formError}
                     role="alert"
                     data-testid="form-error"
                 >
@@ -294,7 +296,7 @@ export default function AddLegoForm({ onAdd, existingSets }) {
 
             <button
                 type="submit"
-                className="add-lego-submit"
+                className={styles.addLegoSubmit}
                 disabled={isSubmitting}
                 data-testid="form-submit"
             >

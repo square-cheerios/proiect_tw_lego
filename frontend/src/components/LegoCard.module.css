@@ -1,0 +1,304 @@
+
+/* =========================================
+   BRICKSTORE - LEGO CARD
+   ========================================= */
+
+.itemCard {
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+
+    min-width: 0;
+    padding: 0;
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.60);
+
+    box-shadow: 0 7px 22px rgba(74, 60, 110, 0.055);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.4s ease;
+}
+
+.itemCard:hover {
+    transform: translateY(-4px);
+    border-color: rgba(156, 140, 219, 0.42);
+    background: rgba(255, 255, 255, 0.82);
+
+    box-shadow:
+        0 15px 35px rgba(74, 60, 110, 0.10),
+        0 0 25px rgba(156, 140, 219, 0.09);
+}
+
+.itemCard::before {
+    content: "";
+    position: absolute;
+    top: 15%;
+    bottom: 15%;
+    left: 0;
+    width: 4px;
+    border-radius: 0 999px 999px 0;
+    background: linear-gradient(var(--purple), var(--pink));
+    pointer-events: none;
+    z-index: 1;
+}
+
+.itemCard.done {
+    opacity: 0.68;
+}
+
+.itemCard.done h3 {
+    color: var(--muted);
+    text-decoration: line-through;
+}
+
+/* Product image */
+
+.imageLink {
+    display: block;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+    border-radius: inherit;
+    overflow: hidden;
+}
+
+.imageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 220px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 14px;
+    transition: transform 0.3s ease;
+}
+
+.imageLink:hover .image {
+    transform: scale(1.045);
+}
+
+.imagePlaceholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    height: 100%;
+    min-height: 220px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(249, 168, 212, 0.18),
+        rgba(196, 181, 253, 0.22),
+        rgba(167, 243, 208, 0.15)
+    );
+
+    color: #87749a;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.placeholderIcon {
+    font-size: 3rem;
+    line-height: 1;
+    opacity: 0.7;
+}
+
+/* Product information */
+
+.itemInfo {
+    padding: 20px;
+    flex: 1;
+    min-width: 0;
+}
+
+.itemInfo h3 {
+    margin: 0 0 5px;
+    font-size: 1.08rem;
+    line-height: 1.35;
+    font-weight: 750;
+}
+
+.titleLink {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.titleLink:hover {
+    color: #9b72c9;
+}
+
+.category {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: var(--purple-dark);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.setNumber {
+    margin: 3px 0 10px;
+    color: var(--muted);
+    font-size: 0.80rem;
+}
+
+.details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin: 15px 0;
+    color: var(--muted);
+    font-size: 0.83rem;
+    font-weight: 600;
+}
+
+/* Condition badges */
+
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.badgeNew {
+    background: var(--mint-soft);
+    color: var(--mint-dark);
+}
+
+.badgeUsed {
+    background: var(--pink-soft);
+    color: #b15f85;
+}
+
+.badgeSealed {
+    background: var(--blue-soft);
+    color: #598bad;
+}
+
+/* Inventory actions */
+
+.itemActions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+}
+
+.availabilityControl {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    font-size: 0.82rem;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.availabilityControl input {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--mint-dark);
+    cursor: pointer;
+}
+
+.deleteButton {
+    padding: 8px 14px;
+    border: 1px solid #e78ca5;
+    border-radius: 10px;
+    background: transparent;
+    color: #d96c8a;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.deleteButton:hover {
+    background: #d96c8a;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.imageLink:focus-visible,
+.titleLink:focus-visible,
+.deleteButton:focus-visible {
+    outline: 3px solid #a78bfa;
+    outline-offset: 4px;
+}
+
+/* Dark mode */
+
+:global(:root[data-theme="dark"]) .itemCard {
+    background: rgba(42, 39, 53, 0.72);
+}
+
+:global(:root[data-theme="dark"]) .itemCard:hover {
+    background: rgba(51, 47, 64, 0.94);
+    border-color: rgba(173, 155, 232, 0.35);
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.20),
+        0 0 28px rgba(173, 155, 232, 0.08);
+}
+
+:global(:root[data-theme="dark"]) .imagePlaceholder {
+    background: linear-gradient(
+        145deg,
+        rgba(249, 168, 212, 0.09),
+        rgba(196, 181, 253, 0.14),
+        rgba(167, 243, 208, 0.07)
+    );
+    color: #c4b5d5;
+}
+
+:global(:root[data-theme="dark"]) .titleLink:hover {
+    color: #d4b5ff;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+    .imageContainer {
+        height: 240px;
+    }
+
+    .itemActions {
+        flex-wrap: wrap;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .itemCard,
+    .image,
+    .deleteButton {
+        transition: none;
+    }
+}

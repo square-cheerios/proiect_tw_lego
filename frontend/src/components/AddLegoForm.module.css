@@ -1,0 +1,263 @@
+
+/* BRICKSTORE - ADD LEGO FORM */
+
+.addLegoForm {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+
+    margin-bottom: 32px;
+    padding: clamp(22px, 4vw, 36px);
+
+    border: 1px solid rgba(192, 132, 252, 0.25);
+    border-radius: 24px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(249, 168, 212, 0.09),
+        rgba(196, 181, 253, 0.11),
+        rgba(167, 243, 208, 0.06)
+    );
+
+    box-shadow:
+        0 12px 36px rgba(20, 10, 35, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    animation: addFormAppear 0.35s ease-out both;
+}
+
+@keyframes addFormAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.addLegoForm h3 {
+    margin: 0 0 4px;
+    font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+/* Two-column layout */
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+/* Labels */
+
+.addLegoForm label {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 0;
+
+    font-size: 0.88rem;
+    font-weight: 650;
+    line-height: 1.4;
+}
+
+/* Inputs, selects and textareas */
+
+.addLegoForm input:not([type="checkbox"]),
+.addLegoForm select,
+.addLegoForm textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
+    padding: 14px 16px;
+
+    border: 1px solid rgba(170, 150, 190, 0.32);
+    border-radius: 13px;
+
+    background: rgba(255, 255, 255, 0.78);
+    color: #31243d;
+
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 450;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.addLegoForm input::placeholder,
+.addLegoForm textarea::placeholder {
+    color: #95869f;
+    opacity: 1;
+}
+
+.addLegoForm input:not([type="checkbox"]):focus,
+.addLegoForm select:focus,
+.addLegoForm textarea:focus {
+    border-color: #c084fc;
+    box-shadow: 0 0 0 4px rgba(192, 132, 252, 0.15);
+    background: #fff;
+}
+
+.addLegoForm textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* Availability checkbox */
+
+.availabilityCheckbox {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 12px;
+    align-self: flex-start;
+
+    padding: 12px 16px;
+    border: 1px solid rgba(167, 243, 208, 0.3);
+    border-radius: 13px;
+
+    background: rgba(167, 243, 208, 0.09);
+    cursor: pointer;
+}
+
+.addLegoForm input[type="checkbox"] {
+    width: 19px;
+    height: 19px;
+    margin: 0;
+    accent-color: #a78bfa;
+    cursor: pointer;
+}
+
+/* Validation error */
+
+.formError {
+    margin: 0;
+    padding: 13px 16px;
+
+    border: 1px solid rgba(244, 114, 182, 0.4);
+    border-radius: 12px;
+
+    background: rgba(244, 114, 182, 0.1);
+    color: #be185d;
+    font-size: 0.9rem;
+}
+
+/* Submit button */
+
+.addLegoSubmit {
+    align-self: flex-end;
+    padding: 15px 28px;
+
+    border: none;
+    border-radius: 999px;
+
+    background: linear-gradient(
+        120deg,
+        #f9a8d4 0%,
+        #c4b5fd 52%,
+        #a7f3d0 100%
+    );
+
+    color: #31243d;
+    font: inherit;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+
+    box-shadow: 0 8px 24px rgba(192, 132, 252, 0.22);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+.addLegoSubmit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(192, 132, 252, 0.35);
+    filter: brightness(1.05);
+}
+
+.addLegoSubmit:active {
+    transform: translateY(0);
+}
+
+/* Dark mode */
+
+:global(:root[data-theme="dark"]) .addLegoForm {
+    background: linear-gradient(
+        135deg,
+        rgba(249, 168, 212, 0.065),
+        rgba(196, 181, 253, 0.09),
+        rgba(167, 243, 208, 0.035)
+    );
+
+    border-color: rgba(196, 181, 253, 0.2);
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.14);
+}
+
+:global(:root[data-theme="dark"]) .addLegoForm input:not([type="checkbox"]),
+:global(:root[data-theme="dark"]) .addLegoForm select,
+:global(:root[data-theme="dark"]) .addLegoForm textarea {
+    background: rgba(24, 21, 35, 0.72);
+    color: #f3edf8;
+    border-color: rgba(196, 181, 253, 0.23);
+}
+
+:global(:root[data-theme="dark"]) .addLegoForm input:not([type="checkbox"]):focus,
+:global(:root[data-theme="dark"]) .addLegoForm select:focus,
+:global(:root[data-theme="dark"]) .addLegoForm textarea:focus {
+    background: rgba(35, 29, 49, 0.95);
+    border-color: #c4b5fd;
+    box-shadow: 0 0 0 4px rgba(196, 181, 253, 0.12);
+}
+
+:global(:root[data-theme="dark"]) .addLegoForm input::placeholder,
+:global(:root[data-theme="dark"]) .addLegoForm textarea::placeholder {
+    color: #a69aaf;
+}
+
+:global(:root[data-theme="dark"]) .formError {
+    color: #f9a8d4;
+}
+
+/* Mobile */
+
+@media (max-width: 650px) {
+    .formGrid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .addLegoForm {
+        gap: 18px;
+        border-radius: 18px;
+    }
+
+    .addLegoSubmit {
+        width: 100%;
+        align-self: stretch;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .addLegoForm {
+        animation: none;
+    }
+
+    .addLegoSubmit {
+        transition: none;
+    }
+}

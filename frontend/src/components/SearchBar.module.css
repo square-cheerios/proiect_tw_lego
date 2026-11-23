@@ -1,0 +1,78 @@
+
+/* BRICKSTORE - SEARCH BAR */
+
+.searchContainer {
+    margin-bottom: 28px;
+}
+
+.searchLabel {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.searchInputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 17px;
+    color: var(--purple-dark);
+    font-size: 1.7rem;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 15px 18px 15px 49px;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    background: var(--card);
+    color: var(--text);
+
+    font: inherit;
+    font-size: 0.94rem;
+    outline: none;
+
+    box-shadow: 0 5px 18px var(--shadow);
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.4s ease;
+}
+
+.searchInput::placeholder {
+    color: var(--muted);
+    opacity: 0.75;
+}
+
+.searchInput:hover {
+    border-color: var(--purple);
+}
+
+.searchInput:focus {
+    border-color: var(--purple-dark);
+    box-shadow:
+        0 0 0 4px var(--purple-soft),
+        0 8px 25px var(--shadow);
+}
+
+@media (max-width: 600px) {
+    .searchInput {
+        font-size: 0.85rem;
+        padding: 14px 14px 14px 45px;
+    }
+
+    .searchIcon {
+        left: 14px;
+    }
+}

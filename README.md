@@ -392,3 +392,86 @@ Therefore, refreshing the page restores the inventory from the API. This behavio
 | S6-R5 | HTTP requests are centralized and API URL is configurable | [api.js](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/frontend/src/api.js), [.env.example](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/frontend/.env.example) | Verify `fetch()`, `res.ok`, and `VITE_API_URL` |
 | S6-R6 | README and AI usage log are updated | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/README.md), [etapa-06.md](https://github.com/square-cheerios/proiect_tw_lego/blob/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1/ai-log/etapa-06.md) | Review the Stage 6 documentation and AI log |
 | S6-R7 | Stage 6 changes are committed and pushed | [Stage 6 commit](https://github.com/square-cheerios/proiect_tw_lego/commit/747f7e3a4b3af9681c0c6d41f64c8b672ca477b1) | Open the commit and inspect the changed files |
+
+
+
+## Stage 7: Form and Validation
+
+BrickStore now supports persistent CRUD operations through the
+local JSON Server API.
+
+### Features implemented
+- Controlled LEGO set creation form using React state.
+- Validation for required fields, set numbers, piece counts,
+  prices, and duplicate set numbers.
+- Additional validation limiting LEGO set names to 100 characters.
+- POST requests for adding LEGO sets.
+- PATCH requests for updating product availability.
+- DELETE requests for removing LEGO sets.
+- React state updates only after successful API responses.
+- Error messages displayed directly in the interface.
+- Form values preserved when an API request fails.
+- Submit button disabled while saving.
+- Automated testing support using `tw.json` and `data-testid`.
+
+All inventory changes persist after refreshing the page.
+
+## Project Status
+
+- [x] Stage 1: HTML and CSS
+- [x] Stage 2: UI improvements
+- [x] Stage 3: React and Vite
+- [x] Stage 4: React components
+- [x] Stage 5: Production build
+- [x] Stage 6: Mock API integration
+- [x] Stage 7: Form and validation
+- [ ] Stage 8: Routing and detail pages
+
+
+## Stage 7 Checklist
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S7-R1 | Controlled form for adding LEGO sets | [AddLegoForm.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/011280dd0c048e4917d9b1c90547690922d24576/frontend/src/components/AddLegoForm.jsx) | Open the form and verify that input values are managed using React state |
+| S7-R2 | Client-side validation before POST | [AddLegoForm.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/011280dd0c048e4917d9b1c90547690922d24576/frontend/src/components/AddLegoForm.jsx) | Submit invalid data and verify that an error appears without sending a POST request |
+| S7-R3 | Persistent creation using POST | [api.js](https://github.com/square-cheerios/proiect_tw_lego/blob/011280dd0c048e4917d9b1c90547690922d24576/frontend/src/api.js), [App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/011280dd0c048e4917d9b1c90547690922d24576/frontend/src/App.jsx) | Add a LEGO set, refresh the page and verify that it remains in the inventory |
+| S7-R4 | Persistent availability updates and deletion using PATCH and DELETE | [api.js](https://github.com/square-cheerios/proiect_tw_lego/blob/011280dd0c048e4917d9b1c90547690922d24576/frontend/src/api.js), [App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/011280dd0c048e4917d9b1c90547690922d24576/frontend/src/App.jsx) | Toggle availability or delete a LEGO set and verify persistence after refresh |
+| S7-R5 | Submission state and API error handling | [AddLegoForm.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/011280dd0c048e4917d9b1c90547690922d24576/frontend/src/components/AddLegoForm.jsx) | Test with a delayed API and an unavailable API; verify the disabled button, error message and preserved values |
+| S7-R6 | Automated testing configuration and selectors | [tw.json](https://github.com/square-cheerios/proiect_tw_lego/blob/011280dd0c048e4917d9b1c90547690922d24576/tw.json), [LegoCard.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/011280dd0c048e4917d9b1c90547690922d24576/frontend/src/components/LegoCard.jsx), [LegoList.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/011280dd0c048e4917d9b1c90547690922d24576/frontend/src/components/LegoList.jsx) | Check the configuration and data-testid attributes in the browser |
+| S7-R7 | README and AI usage log updated | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/011280dd0c048e4917d9b1c90547690922d24576/README.md), [etapa-07.md](https://github.com/square-cheerios/proiect_tw_lego/blob/011280dd0c048e4917d9b1c90547690922d24576/ai-log/etapa-07.md) | Review the Stage 7 documentation and AI log |
+| S7-R8 | Stage 7 implementation committed and pushed | [Stage 7 commit](https://github.com/square-cheerios/proiect_tw_lego/commit/011280dd0c048e4917d9b1c90547690922d24576) | Open the commit and inspect the changed files |
+
+
+## Stage 8: Routing and detail page
+
+BrickStore now uses React Router for client-side navigation between the LEGO inventory (`/`), individual set details (`/legoSets/:id`), the About page (`/despre`), and a custom 404 page. A shared `Layout` component renders the navigation and common page structure with `Outlet`, while `NavLink` identifies the active route.
+
+The detail page loads a LEGO set from the JSON Server API using its route parameter and displays product information, an image gallery, and an image lightbox. Invalid set IDs are handled with an error state. Component-specific styling has been migrated to CSS Modules, while `App.css` retains shared theme variables, global layout rules, and accessibility styles. The light/dark theme remains available.
+
+### Running locally
+
+From `frontend/`, install dependencies with `npm install`. Run the API with `npm run api` and the frontend in another terminal with `npm run dev`. The frontend is normally available at `http://localhost:5173` and the API at `http://localhost:3001`.
+
+### Stage 8 verification
+
+Check the inventory-to-detail navigation, browser Back button, refreshing `/legoSets/1`, missing set `/legoSets/999999`, unknown route `/unknown-page`, image gallery, dark mode, and the Stage 7 add/toggle/delete features. Run `npm run lint` and `npm run build` before committing.
+
+### Stage 8 checklist
+
+| ID | Requirement | Where (permalink) | How to check |
+| --- | --- | --- | --- |
+| S8-R1 | Header navigation without full page reload | `src/App.jsx`, `src/components/Layout.jsx` | Navigate between Inventory and About; inspect Network |
+| S8-R2 | LEGO card links to details | `src/components/LegoCard.jsx`, `src/pages/LegoDetails.jsx` | Click a LEGO title |
+| S8-R3 | Detail URL refresh and missing ID handling | `src/pages/LegoDetails.jsx` | Refresh `/legoSets/1`; visit `/legoSets/999999` |
+| S8-R4 | Unknown route renders app 404 | `src/App.jsx`, `src/pages/NotFoundPage.jsx` | Visit `/unknown-page` |
+| S8-R5 | Component-scoped CSS Modules | `src/components/`, `src/pages/`, `src/App.css` | Inspect CSS imports and shared styles |
+| S8-R6 | Required `data-testid` attributes and detail route | `src/components/Layout.jsx`, `src/components/LegoCard.jsx`, `src/pages/LegoDetails.jsx`, `src/pages/NotFoundPage.jsx` | Inspect DOM / automated checks |
+| S8-R7 | README and AI log | `README.md`, `ai-log/etapa-08.md` | Open both files |
+| S8-R8 | Stage 8 commit published | Add commit URL after first push | Inspect GitHub commit history |
+
+**Important:** Replace the file paths in the checklist with commit-pinned GitHub permalinks after pushing the Stage 8 implementation. Confirm that `tw.json` and all Stage 7/8 test IDs are retained.
+
+## Status
+- [x] Stage 7: form and validation
+- [x] Stage 8: routing and detail page (implementation; final tests pending)
+- [ ] Stage 9: own backend with Express

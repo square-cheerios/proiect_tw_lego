@@ -70,3 +70,7 @@ export function deleteLegoSet(id) {
         method: "DELETE"
     });
 }
+
+export function fetchLegoSet(id) {
+  return request(`/legoSets/${encodeURIComponent(id)}`);
+}

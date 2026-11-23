@@ -1,0 +1,587 @@
+/* BrickStore Stage 8 - product details CSS Module */
+.setNumber { color: var(--muted); }
+/* LEGO image fallback */
+
+.legoImagePlaceholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    width: 100%;
+    height: 100%;
+    min-height: 220px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(249, 168, 212, 0.18),
+        rgba(196, 181, 253, 0.22),
+        rgba(167, 243, 208, 0.15)
+    );
+
+    color: #87749a;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.placeholderIcon {
+    font-size: 3rem;
+    line-height: 1;
+    opacity: 0.7;
+}
+
+:global(:root[data-theme="dark"]) .legoImagePlaceholder {
+    background: linear-gradient(
+        145deg,
+        rgba(249, 168, 212, 0.09),
+        rgba(196, 181, 253, 0.14),
+        rgba(167, 243, 208, 0.07)
+    );
+
+    color: #c4b5d5;
+}
+
+
+/* =====================================================
+   BRICKSTORE - LEGO PRODUCT DETAILS PAGE
+   ===================================================== */
+
+.legoDetailsPage {
+    padding: clamp(22px, 4vw, 48px);
+    overflow: hidden;
+}
+
+/* Back navigation */
+
+.backToInventory {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 30px;
+    padding: 10px 17px;
+    border-radius: 999px;
+    background: rgba(196, 181, 253, 0.16);
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.backToInventory:hover {
+    background: rgba(196, 181, 253, 0.32);
+    transform: translateX(-3px);
+}
+
+/* Main two-column layout */
+
+.legoProductLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 54px);
+    align-items: start;
+}
+
+.legoGallery,
+.legoProductInfo {
+    min-width: 0;
+}
+
+/* =====================================================
+   IMAGE GALLERY
+   ===================================================== */
+
+.legoGalleryMain {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: 540px;
+    padding: 22px;
+    border: 1px solid rgba(196, 181, 253, 0.25);
+    border-radius: 24px;
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.82),
+        rgba(250, 235, 249, 0.65),
+        rgba(233, 246, 240, 0.68)
+    );
+    box-shadow: 0 12px 35px rgba(67, 45, 88, 0.06);
+    cursor: zoom-in;
+    overflow: hidden;
+    transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.legoGalleryMain:hover:not(:disabled) {
+    box-shadow: 0 18px 45px rgba(67, 45, 88, 0.12);
+    transform: translateY(-2px);
+}
+
+.legoGalleryMain:disabled {
+    cursor: default;
+}
+
+.legoGalleryMain > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.legoGalleryMain:hover > img {
+    transform: scale(1.035);
+}
+
+/* Placeholder */
+
+.legoGalleryMain .legoImagePlaceholder {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border-radius: 16px;
+}
+
+/* Zoom hint */
+
+.galleryZoomHint {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    padding: 9px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #57476b;
+    font-size: 0.78rem;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(40, 30, 60, 0.08);
+    pointer-events: none;
+}
+
+/* Scrollable thumbnail strip */
+
+.legoGalleryThumbnails {
+    display: flex;
+    gap: 12px;
+    margin-top: 15px;
+    padding: 4px 2px 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #c4b5fd transparent;
+    scroll-snap-type: x proximity;
+}
+
+.legoGalleryThumbnails::-webkit-scrollbar {
+    height: 7px;
+}
+
+.legoGalleryThumbnails::-webkit-scrollbar-thumb {
+    background: #c4b5fd;
+    border-radius: 999px;
+}
+
+.legoGalleryThumbnails::-webkit-scrollbar-track {
+    background: rgba(196, 181, 253, 0.12);
+    border-radius: 999px;
+}
+
+.galleryThumbnail {
+    flex: 0 0 94px;
+    width: 94px;
+    height: 94px;
+    padding: 7px;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.72);
+    cursor: pointer;
+    scroll-snap-align: start;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.galleryThumbnail:hover {
+    transform: translateY(-3px);
+    border-color: rgba(196, 181, 253, 0.7);
+}
+
+.galleryThumbnail.active {
+    border-color: #a78bfa;
+    background: rgba(196, 181, 253, 0.15);
+}
+
+.galleryThumbnail img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 9px;
+}
+
+.galleryCaption {
+    margin-top: 4px;
+    text-align: center;
+    color: #9585a4;
+    font-size: 0.8rem;
+}
+
+/* =====================================================
+   PRODUCT INFORMATION
+   ===================================================== */
+
+.legoProductInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.legoProductInfo .legoCategory {
+    display: inline-block;
+    width: fit-content;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgba(196, 181, 253, 0.23);
+    color: #7958a0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.legoProductInfo h2 {
+    margin: 0;
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
+    line-height: 1.13;
+    letter-spacing: -0.035em;
+}
+
+.legoProductInfo .setNumber {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.65;
+}
+
+.productPrice {
+    margin-top: 12px;
+    font-size: clamp(1.9rem, 3vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #9b72c9;
+}
+
+.productStock {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.productStock.in-stock {
+    color: #28765b;
+    background: rgba(167, 243, 208, 0.38);
+}
+
+.productStock.out-of-stock {
+    color: #b25a70;
+    background: rgba(251, 207, 232, 0.45);
+}
+
+/* Specifications grid */
+
+.productSpecifications {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.productSpecifications > div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid rgba(196, 181, 253, 0.18);
+    border-radius: 17px;
+    background: linear-gradient(
+        135deg,
+        rgba(250, 232, 246, 0.32),
+        rgba(224, 242, 241, 0.28)
+    );
+}
+
+.productSpecifications span {
+    font-size: 0.76rem;
+    opacity: 0.65;
+}
+
+.productSpecifications strong {
+    font-size: 1rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+/* Description */
+
+.productDescription {
+    width: 100%;
+    margin-top: 16px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(196, 181, 253, 0.24);
+}
+
+.productDescription h3 {
+    margin: 0 0 12px;
+    font-size: 1.15rem;
+}
+
+.productDescription p {
+    margin: 0;
+    line-height: 1.85;
+    opacity: 0.82;
+}
+
+/* Building instructions button */
+
+.instructionsButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 14px;
+    padding: 15px 24px;
+    border-radius: 15px;
+    background: linear-gradient(
+        115deg,
+        #f9a8d4,
+        #c4b5fd,
+        #a7f3d0
+    );
+    color: #342d46;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 800;
+    box-shadow: 0 8px 24px rgba(167, 139, 250, 0.18);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.instructionsButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(167, 139, 250, 0.3);
+}
+
+/* =====================================================
+   FULLSCREEN IMAGE LIGHTBOX
+   ===================================================== */
+
+.legoLightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(17, 15, 29, 0.88);
+    backdrop-filter: blur(12px);
+}
+
+.lightboxContent {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min(1100px, 100%);
+    height: min(85vh, 850px);
+}
+
+.lightboxImage {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.lightboxClose,
+.lightboxArrow {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s, transform 0.2s;
+}
+
+.lightboxClose:hover,
+.lightboxArrow:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.07);
+}
+
+.lightboxClose {
+    top: 0;
+    right: 0;
+}
+
+.lightboxArrow.prev {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.lightboxArrow.next {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.lightboxArrow.prev:hover,
+.lightboxArrow.next:hover {
+    transform: translateY(-50%) scale(1.07);
+}
+
+.lightboxCounter {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-size: 0.85rem;
+}
+
+/* =====================================================
+   DARK MODE
+   ===================================================== */
+
+:global(:root[data-theme="dark"]) .legoGalleryMain {
+    background: linear-gradient(
+        145deg,
+        rgba(64, 52, 83, 0.85),
+        rgba(49, 48, 69, 0.9),
+        rgba(42, 65, 64, 0.65)
+    );
+    border-color: rgba(196, 181, 253, 0.15);
+}
+
+:global(:root[data-theme="dark"]) .galleryThumbnail {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+:global(:root[data-theme="dark"]) .galleryThumbnail.active {
+    background: rgba(196, 181, 253, 0.17);
+}
+
+:global(:root[data-theme="dark"]) .galleryZoomHint {
+    background: rgba(40, 34, 57, 0.9);
+    color: #eee2ff;
+}
+
+:global(:root[data-theme="dark"]) .legoProductInfo .legoCategory {
+    background: rgba(196, 181, 253, 0.16);
+    color: #d8c4ff;
+}
+
+:global(:root[data-theme="dark"]) .productPrice {
+    color: #d4b5ff;
+}
+
+:global(:root[data-theme="dark"]) .productSpecifications > div {
+    background: linear-gradient(
+        135deg,
+        rgba(196, 181, 253, 0.09),
+        rgba(167, 243, 208, 0.05)
+    );
+    border-color: rgba(196, 181, 253, 0.12);
+}
+
+:global(:root[data-theme="dark"]) .productStock.in-stock {
+    color: #a7f3d0;
+    background: rgba(52, 135, 104, 0.22);
+}
+
+:global(:root[data-theme="dark"]) .productStock.out-of-stock {
+    color: #f9a8d4;
+    background: rgba(168, 70, 105, 0.2);
+}
+
+/* =====================================================
+   RESPONSIVE LAYOUT
+   ===================================================== */
+
+@media (max-width: 850px) {
+    .legoProductLayout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .legoGalleryMain {
+        max-height: 480px;
+    }
+}
+
+@media (max-width: 480px) {
+    .legoDetailsPage {
+        padding: 18px;
+    }
+
+    .legoGalleryMain {
+        padding: 12px;
+        border-radius: 17px;
+    }
+
+    .galleryThumbnail {
+        flex-basis: 75px;
+        width: 75px;
+        height: 75px;
+    }
+
+    .productSpecifications > div {
+        padding: 13px;
+    }
+
+    .legoLightbox {
+        padding: 10px;
+    }
+
+    .lightboxArrow,
+    .lightboxClose {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .legoGalleryMain,
+    .legoGalleryMain > img,
+    .galleryThumbnail,
+    .instructionsButton {
+        transition: none;
+    }
+}
+
+
