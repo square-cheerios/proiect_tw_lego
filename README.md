@@ -475,3 +475,14 @@ Check the inventory-to-detail navigation, browser Back button, refreshing `/lego
 - [x] Stage 7: form and validation
 - [x] Stage 8: routing and detail page (implementation; final tests pending)
 - [ ] Stage 9: own backend with Express
+
+| ID | Cerință | Permalink |
+|---|---|---|
+| S8-R1 | React Router și rutele aplicației | [App.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/a1b6b2844f0c7397274373bd751834a41c4af134/frontend/src/App.jsx) |
+| S8-R2 | Layout și navigare | [components/Layout.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/a1b6b2844f0c7397274373bd751834a41c4af134/frontend/src/components/Layout.jsx) |
+| S8-R3 | Pagina inventarului | [pages/InventoryPage.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/a1b6b2844f0c7397274373bd751834a41c4af134/frontend/src/pages/InventoryPage.jsx) |
+| S8-R4 | Pagina individuală LEGO | [pages/LegoDetails.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/a1b6b2844f0c7397274373bd751834a41c4af134/frontend/src/pages/LegoDetails.jsx) |
+| S8-R5 | CSS Modules pentru carduri | [components/LegoCard.module.css](https://github.com/square-cheerios/proiect_tw_lego/blob/a1b6b2844f0c7397274373bd751834a41c4af134/frontend/src/components/LegoCard.module.css) |
+| S8-R6 | CSS Modules pentru formular | [components/AddLegoForm.module.css](https://github.com/square-cheerios/proiect_tw_lego/blob/a1b6b2844f0c7397274373bd751834a41c4af134/frontend/src/components/AddLegoForm.module.css) |
+| S8-R7 | Pagina About | [pages/AboutPage.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/a1b6b2844f0c7397274373bd751834a41c4af134/frontend/src/pages/AboutPage.jsx) |
+| S8-R8 | Pagina 404 | [pages/NotFoundPage.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/a1b6b2844f0c7397274373bd751834a41c4af134/frontend/src/pages/NotFoundPage.jsx) |
