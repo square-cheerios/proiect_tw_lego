@@ -486,3 +486,139 @@ Check the inventory-to-detail navigation, browser Back button, refreshing `/lego
 | S8-R6 | CSS Modules pentru formular | [components/AddLegoForm.module.css](https://github.com/square-cheerios/proiect_tw_lego/blob/a1b6b2844f0c7397274373bd751834a41c4af134/frontend/src/components/AddLegoForm.module.css) |
 | S8-R7 | Pagina About | [pages/AboutPage.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/a1b6b2844f0c7397274373bd751834a41c4af134/frontend/src/pages/AboutPage.jsx) |
 | S8-R8 | Pagina 404 | [pages/NotFoundPage.jsx](https://github.com/square-cheerios/proiect_tw_lego/blob/a1b6b2844f0c7397274373bd751834a41c4af134/frontend/src/pages/NotFoundPage.jsx) |
+
+## Stage 9: Own Backend with Express
+
+BrickStore now uses a custom REST API built with Node.js and Express 5, replacing the previous json-server mock API.
+
+### Implemented features
+
+- Custom Express backend with modular routing.
+- Five REST API endpoints for LEGO inventory management.
+- Server-side validation and field whitelisting.
+- Server-generated unique IDs.
+- Duplicate LEGO set number validation.
+- Centralized error handling.
+- Appropriate HTTP status codes.
+- CORS configuration for frontend-backend communication.
+- Health check endpoint.
+- Initial LEGO inventory loaded into server memory.
+- Complete removal of json-server.
+- Compatibility with the existing React frontend, React Router and CSS Modules.
+- Preservation of Stage 7 and Stage 8 automated testing attributes.
+
+### API endpoints
+
+| Method | Endpoint | Description | Success status |
+|---|---|---|---|
+| GET | /health | Server health check | 200 |
+| GET | /legoSets | Retrieve all LEGO sets | 200 |
+| GET | /legoSets/:id | Retrieve a specific LEGO set | 200 |
+| POST | /legoSets | Create a LEGO set | 201 |
+| PATCH | /legoSets/:id | Partially update a LEGO set | 200 |
+| DELETE | /legoSets/:id | Delete a LEGO set | 204 |
+
+Invalid requests return HTTP 400, missing resources return HTTP 404, and internal server errors return HTTP 500.
+
+### Backend structure
+
+```text
+backend/
+├── .env.example
+├── .gitignore
+├── package.json
+├── package-lock.json
+└── src/
+    ├── app.js
+    ├── server.js
+    ├── validation.js
+    ├── data/
+    │   └── initialLegoSets.json
+    └── routes/
+        └── legoSets.js
+```
+
+### How to run
+
+Terminal 1 — Backend:
+
+```bash
+cd backend
+npm ci
+npm run dev
+```
+
+Backend: http://localhost:3001
+
+Terminal 2 — Frontend:
+
+```bash
+cd frontend
+npm ci
+npm run dev
+```
+
+Frontend: http://localhost:5173
+
+### API testing
+
+The following commands can be executed in PowerShell using curl.exe.
+
+```powershell
+curl.exe -i http://localhost:3001/health
+
+curl.exe -i http://localhost:3001/legoSets
+
+$body = @{
+    name = "Test Express LEGO"
+    setNumber = "99998"
+    category = "Test"
+    pieces = 100
+    price = 19.99
+    condition = "new"
+    available = $true
+} | ConvertTo-Json
+
+$body | curl.exe -i -X POST http://localhost:3001/legoSets -H "Content-Type: application/json" --data-binary "@-"
+```
+
+Replace 13 with the ID returned by the POST request.
+
+```powershell
+$id = 13
+
+curl.exe -i "http://localhost:3001/legoSets/$id"
+
+$patch = @{ available = $false } | ConvertTo-Json
+
+$patch | curl.exe -i -X PATCH "http://localhost:3001/legoSets/$id" -H "Content-Type: application/json" --data-binary "@-"
+
+curl.exe -i -X DELETE "http://localhost:3001/legoSets/$id"
+
+curl.exe -i "http://localhost:3001/legoSets/$id"
+
+'{}' | curl.exe -i -X POST http://localhost:3001/legoSets -H "Content-Type: application/json" --data-binary "@-"
+
+curl.exe -i -H "Origin: http://localhost:5173" http://localhost:3001/health
+```
+
+### Validation and quality checks
+
+- Valid CRUD requests tested using curl.
+- Invalid requests correctly rejected.
+- CORS response headers verified.
+- Frontend connected to the Express backend.
+- ESLint completed without errors or warnings.
+- Production build completed successfully.
+- json-server dependency removed.
+
+### Data persistence
+
+Data is currently stored in the backend's memory. Changes survive browser refreshes but are reset when the backend restarts. Permanent database persistence will be implemented in Stage 10 using MariaDB.
+
+### Project Status
+
+- [x] Stage 7: Form and validation
+- [x] Stage 8: Routing and detail page
+- [x] Stage 9: Own backend with Express
+- [ ] Stage 10: MariaDB and full CRUD

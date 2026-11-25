@@ -1,7 +1,7 @@
 
 /* =====================================================
-   BRICKSTORE - STAGE 7
-   API configuration and CRUD operations
+   BRICKSTORE - STAGE 9
+   Express API configuration and CRUD operations
    ===================================================== */
 
 // API configuration
@@ -19,8 +19,13 @@ async function request(path, options = {}) {
     });
 
     // Handle unsuccessful HTTP responses
+    // Read the error message returned by the Express server
     if (!res.ok) {
-        throw new Error(`Server error: ${res.status}`);
+        const body = await res.json().catch(() => ({}));
+
+        throw new Error(
+            body?.error || `Server error: ${res.status}`
+        );
     }
 
     // Handle responses without a body
@@ -40,6 +45,14 @@ export function fetchLegoSets() {
 }
 
 // =====================================================
+// GET - Fetch an individual LEGO set
+// =====================================================
+
+export function fetchLegoSet(id) {
+    return request(`/legoSets/${encodeURIComponent(id)}`);
+}
+
+// =====================================================
 // POST - Create a new LEGO set
 // =====================================================
 
@@ -55,7 +68,7 @@ export function createLegoSet(legoSet) {
 // =====================================================
 
 export function updateLegoSet(id, changes) {
-    return request(`/legoSets/${id}`, {
+    return request(`/legoSets/${encodeURIComponent(id)}`, {
         method: "PATCH",
         body: JSON.stringify(changes)
     });
@@ -66,11 +79,7 @@ export function updateLegoSet(id, changes) {
 // =====================================================
 
 export function deleteLegoSet(id) {
-    return request(`/legoSets/${id}`, {
+    return request(`/legoSets/${encodeURIComponent(id)}`, {
         method: "DELETE"
     });
-}
-
-export function fetchLegoSet(id) {
-  return request(`/legoSets/${encodeURIComponent(id)}`);
 }

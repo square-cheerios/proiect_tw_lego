@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { fetchLegoSet } from "../api.js";
@@ -94,39 +93,50 @@ function LegoProduct({ legoSet }) {
         );
     }
 
-    function changeImage(direction) {
-        if (availableImages.length === 0) return;
+    const imageCount = availableImages.length;
 
-        setActiveImage((prev) =>
-            (Math.min(prev, availableImages.length - 1) +
-                direction +
-                availableImages.length) % availableImages.length
-        );
-    }
+function changeImage(direction) {
+    if (imageCount === 0) return;
 
-    useEffect(() => {
-        if (!lightboxOpen) return;
+    setActiveImage((prev) =>
+        (Math.min(prev, imageCount - 1) +
+            direction +
+            imageCount) % imageCount
+    );
+}
 
-        function handleKeyDown(event) {
-            if (event.key === "Escape") {
-                setLightboxOpen(false);
-            }
+useEffect(() => {
+    if (!lightboxOpen) return;
 
-            if (event.key === "ArrowRight") {
-                changeImage(1);
-            }
-
-            if (event.key === "ArrowLeft") {
-                changeImage(-1);
-            }
+    function handleKeyDown(event) {
+        if (event.key === "Escape") {
+            setLightboxOpen(false);
+            return;
         }
 
-        window.addEventListener("keydown", handleKeyDown);
+        if (imageCount === 0) return;
 
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [lightboxOpen, availableImages.length]);
+        if (event.key === "ArrowRight") {
+            setActiveImage((prev) =>
+                (Math.min(prev, imageCount - 1) +
+                    1 + imageCount) % imageCount
+            );
+        }
+
+        if (event.key === "ArrowLeft") {
+            setActiveImage((prev) =>
+                (Math.min(prev, imageCount - 1) -
+                    1 + imageCount) % imageCount
+            );
+        }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+    };
+}, [lightboxOpen, imageCount]);
 
     return (
         <main className="container">
