@@ -622,3 +622,15 @@ Data is currently stored in the backend's memory. Changes survive browser refres
 - [x] Stage 8: Routing and detail page
 - [x] Stage 9: Own backend with Express
 - [ ] Stage 10: MariaDB and full CRUD
+
+### Stage 9 Checklist
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S9-R1 | Express backend starts on port 3001 | [package.json](https://github.com/square-cheerios/proiect_tw_lego/blob/38363de0ba56ea7007dceb62b530981f7a8bcca3/backend/package.json), [server.js](https://github.com/square-cheerios/proiect_tw_lego/blob/38363de0ba56ea7007dceb62b530981f7a8bcca3/backend/src/server.js) | Run `npm run dev` in backend/ and open `/health` |
+| S9-R2 | All five REST routes return correct HTTP status codes | [legoSets.js](https://github.com/square-cheerios/proiect_tw_lego/blob/38363de0ba56ea7007dceb62b530981f7a8bcca3/backend/src/routes/legoSets.js) | Execute the curl commands from the README |
+| S9-R3 | Invalid data returns HTTP 400 with a clear error message | [validation.js](https://github.com/square-cheerios/proiect_tw_lego/blob/38363de0ba56ea7007dceb62b530981f7a8bcca3/backend/src/validation.js) | Send a POST request with an empty name or body |
+| S9-R4 | React frontend works without json-server | [package.json](https://github.com/square-cheerios/proiect_tw_lego/blob/38363de0ba56ea7007dceb62b530981f7a8bcca3/frontend/package.json), [api.js](https://github.com/square-cheerios/proiect_tw_lego/blob/38363de0ba56ea7007dceb62b530981f7a8bcca3/frontend/src/api.js) | Run Express and React; test add, toggle, delete and refresh |
+| S9-R5 | CORS is configured correctly | [app.js](https://github.com/square-cheerios/proiect_tw_lego/blob/38363de0ba56ea7007dceb62b530981f7a8bcca3/backend/src/app.js) | Check the CORS response header and browser console |
+| S9-R6 | README and Stage 9 AI log updated | [README.md](https://github.com/square-cheerios/proiect_tw_lego/blob/38363de0ba56ea7007dceb62b530981f7a8bcca3/README.md), [etapa-09.md](https://github.com/square-cheerios/proiect_tw_lego/blob/38363de0ba56ea7007dceb62b530981f7a8bcca3/ai-log/etapa-09.md) | Read the documentation |
+| S9-R7 | Stage 9 implementation committed and pushed | [Stage 9 commit](https://github.com/square-cheerios/proiect_tw_lego/commit/38363de0ba56ea7007dceb62b530981f7a8bcca3) | Inspect the GitHub commit history |
