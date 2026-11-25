@@ -68,7 +68,9 @@ export default function LegoCard({ set, onToggle, onDelete }) {
                     {set.category}
                 </span>
 
-                <h3>
+                {/* Stage 7: item-title */}
+                {/* Stage 8: item-link */}
+                <h3 data-testid="item-title">
                     <Link
                         to={productUrl}
                         className={styles.titleLink}

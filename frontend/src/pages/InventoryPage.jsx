@@ -20,7 +20,9 @@ export default function InventoryPage() {
   const [loadError, setLoadError] = useState(null);
   const [actionError, setActionError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [showAddForm, setShowAddForm] = useState(false);
+
+  // Stage 7 fix: the form is visible by default
+  const [showAddForm, setShowAddForm] = useState(true);
 
   // =========================================
   // LOAD INVENTORY FROM API
@@ -85,7 +87,9 @@ export default function InventoryPage() {
 
     setActionError(null);
     setSearchQuery("");
-    setShowAddForm(false);
+
+    // Keep the form visible after successful saving.
+    // AddLegoForm resets its fields after await onAdd().
   }
 
   // PATCH - Update availability
